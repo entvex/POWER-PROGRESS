@@ -48,33 +48,19 @@ public class BasicDB {
 
             }
         });
+    }
 
-        firebaseRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+    public void InsertUserProfile( Profile profile )
+    {
+        firebaseRef.child("Profile").setValue(profile.getEmail());
+        firebaseRef.child("Profile").child(profile.escapeEmail()).setValue(profile.getName());
+        firebaseRef.child("Profile").child(profile.escapeEmail()).child("Name").setValue(profile.getName());
+        firebaseRef.child("Profile").child(profile.escapeEmail()).child("Age").setValue(profile.getAge());
 
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        })
-
+        String options = "";
+        for (String option: profile.getOptions()) {
+            options += option + ",";
+        }
+        firebaseRef.child("Profile").child(profile.escapeEmail()).child("options").setValue(options.substring(0,options.length()-1));
     }
 }

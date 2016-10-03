@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainMenuActivity extends AppCompatActivity {
 TextView helloTextTest;
 
@@ -17,9 +20,13 @@ TextView helloTextTest;
         helloTextTest = (TextView)findViewById(R.id.test);
 
         BasicDB testSubject = new BasicDB(this);
-        testSubject.testInserter("folder","hey");
-        testSubject.testInserter("Abe","Kat");
-        
-        testSubject.testReceiver();
+
+        Profile profile = new Profile("ss@ssdk","Ole","21");
+        profile.setOptions( new ArrayList<String>() {{
+            add("Lift");
+            add("HeavyRock");
+        }});
+
+        testSubject.InsertUserProfile(profile);
     }
 }
