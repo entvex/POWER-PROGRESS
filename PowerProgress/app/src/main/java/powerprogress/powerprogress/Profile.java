@@ -28,7 +28,7 @@ public class Profile
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = escapeEmail(email);
     }
 
     public void setOptions(List<String> options) {
@@ -48,7 +48,7 @@ public class Profile
     }
 
     public String getEmail() {
-        return email;
+        return escapeEmail(email);
     }
 
     public List<String> getOptions() {
@@ -63,6 +63,10 @@ public class Profile
         if (email.contains("."))
         {
             return email.replace('.', ',');
+        } else
+        {
+            //if getting the data from the database the , is corverted back into a .
+            return email.replace(',','.');
         }
         return email;
     }
