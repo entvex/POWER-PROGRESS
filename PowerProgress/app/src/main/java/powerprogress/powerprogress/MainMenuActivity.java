@@ -18,6 +18,7 @@ TextView helloTextTest;
 
         BasicDB testSubject = new BasicDB(this);
         testSubject.testInserter("folder","hey");
+        testSubject.testInserter("Abe","Kat");
         
         testSubject.testReceiver();
     }
