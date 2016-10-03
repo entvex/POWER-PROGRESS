@@ -10,7 +10,7 @@ public class Profile
     private List<String> options;
     private List<String> uploads;
 
-    public Profile(String email, String name, String age)
+    public Profile()
     {
         this.email = email;
         this.name  = name;

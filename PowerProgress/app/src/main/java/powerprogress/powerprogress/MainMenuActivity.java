@@ -4,10 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainMenuActivity extends AppCompatActivity {
 TextView helloTextTest;
@@ -19,14 +16,31 @@ TextView helloTextTest;
 
         helloTextTest = (TextView)findViewById(R.id.test);
 
-        BasicDB testSubject = new BasicDB(this);
+        BasicDB basicDB = new BasicDB(this);
 
-        Profile profile = new Profile("ss@ssdk","Ole","21");
+/*        Profile profile = new Profile("ss@ss.dk","Ole","21");
         profile.setOptions( new ArrayList<String>() {{
             add("Lift");
             add("HeavyRock");
         }});
 
-        testSubject.InsertUserProfile(profile);
+        basicDB.insertUserProfile(profile);
+        //testSubject.insertUserProfile(profile);
+
+        profile = new Profile("ss@kk.dk", "jens", "41");
+        profile.setOptions( new ArrayList<String>() {{
+            add("Lift");
+            add("HeavyRock");
+        }});*/
+
+        //testSubject.insertUserProfile(profile);
+
+        //basicDB.insertUserProfile(profile);
+
+
+
+        Profile profile = basicDB.getUserProfile("ss@kk.dk");
+
+
     }
 }

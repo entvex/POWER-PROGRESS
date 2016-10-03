@@ -31,36 +31,42 @@ public class BasicDB {
 
     public void testInserter(String inputFolder,String inputText){
         firebaseRef.child(inputFolder).setValue(inputText);
+
+
     }
 
-    public void testReceiver(){
+    public void insertUserProfile(Profile profile )
+    {
+        firebaseRef.child("Profile").child(profile.escapeEmail()).setValue(profile);
+    }
+
+    public Profile getUserProfile(final String email)
+    {
+        final Profile[] profile = new Profile[1];
 
         firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.child("Person").getChildren()) {
-                    Log.d(TAG, "onDataChange: " + child.getValue(String.class));
+
+                for (DataSnapshot postSnapshot: dataSnapshot.child("Profile").getChildren()) {
+                    Profile post = postSnapshot.getValue(Profile.class);
+                    if (post.getEmail().equals(email)){
+                        System.out.println(post.getEmail() + " - " + post.getAge());
+                        profile[0] = postSnapshot.getValue(Profile.class);
+                        return;
+                    }
                 }
             }
-
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
-    }
-
-    public void InsertUserProfile( Profile profile )
-    {
-        firebaseRef.child("Profile").setValue(profile.getEmail());
-        firebaseRef.child("Profile").child(profile.escapeEmail()).setValue(profile.getName());
-        firebaseRef.child("Profile").child(profile.escapeEmail()).child("Name").setValue(profile.getName());
-        firebaseRef.child("Profile").child(profile.escapeEmail()).child("Age").setValue(profile.getAge());
-
-        String options = "";
-        for (String option: profile.getOptions()) {
-            options += option + ",";
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        firebaseRef.child("Profile").child(profile.escapeEmail()).child("options").setValue(options.substring(0,options.length()-1));
+        return profile[0];
     }
 }
