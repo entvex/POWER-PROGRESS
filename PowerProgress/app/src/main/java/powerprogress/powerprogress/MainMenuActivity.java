@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -16,31 +19,18 @@ TextView helloTextTest;
 
         helloTextTest = (TextView)findViewById(R.id.test);
 
-        BasicDB basicDB = new BasicDB(this);
+        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
-/*        Profile profile = new Profile("ss@ss.dk","Ole","21");
+        Profile profile = new Profile();
+        profile.setName("ole");
+        profile.setAge("32");
+        profile.setEmail("ole@ole.dk");
+
         profile.setOptions( new ArrayList<String>() {{
             add("Lift");
             add("HeavyRock");
         }});
 
-        basicDB.insertUserProfile(profile);
-        //testSubject.insertUserProfile(profile);
-
-        profile = new Profile("ss@kk.dk", "jens", "41");
-        profile.setOptions( new ArrayList<String>() {{
-            add("Lift");
-            add("HeavyRock");
-        }});*/
-
-        //testSubject.insertUserProfile(profile);
-
-        //basicDB.insertUserProfile(profile);
-
-
-
-        Profile profile = basicDB.getUserProfile("ss@kk.dk");
-
-
+        firebaseDatabase.child("Profile").setValue(profile);
     }
 }

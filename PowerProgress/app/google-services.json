@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1095771845802",
+    "firebase_url": "https://power-progress.firebaseio.com",
+    "project_id": "power-progress",
+    "storage_bucket": "power-progress.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095771845802:android:1404cad1dbe96f94",
+        "android_client_info": {
+          "package_name": "powerprogress.powerprogress"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095771845802-rfsmb9doh3i18o0nkt7io8g1vb5uisr4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKpx1o3QfZWT22aQpqsikrcqe-iYvjq4U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

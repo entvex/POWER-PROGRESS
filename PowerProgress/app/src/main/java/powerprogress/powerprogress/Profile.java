@@ -59,17 +59,15 @@ public class Profile
         return uploads;
     }
 
-    public String escapeEmail() {
+    public String escapeEmail(String email) {
         if (email.contains("."))
         {
             return email.replace('.', ',');
-        } else
+        }
+        else
         {
             //if getting the data from the database the , is corverted back into a .
             return email.replace(',','.');
         }
-        return email;
     }
-
-
 }
