@@ -7,16 +7,12 @@ public class Profile
     private String email;
     private String name;
     private String age;
+    private String description;
     private List<String> options;
     private List<String> uploads;
 
     public Profile()
     {
-        this.email = email;
-        this.name  = name;
-        this.age   = age;
-        this.options = options;
-        this.uploads = uploads;
     }
 
     public void setName(String name) {
@@ -39,8 +35,8 @@ public class Profile
         this.uploads = uploads;
     }
 
-    public String getName() {
-        return name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getAge() {
@@ -49,6 +45,14 @@ public class Profile
 
     public String getEmail() {
         return escapeEmail(email);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public List<String> getOptions() {

@@ -29,11 +29,9 @@ public class MainMenuActivity extends AppCompatActivity {
         }
         else
         {
-            Intent TestIntent = new Intent(MainMenuActivity.this,UploadDataActivity.class);
+            Intent TestIntent = new Intent(MainMenuActivity.this,ProfileActivity.class);
             startActivity(TestIntent);
         }
-
-
         helloTextTest = (TextView)findViewById(R.id.test);
 
 

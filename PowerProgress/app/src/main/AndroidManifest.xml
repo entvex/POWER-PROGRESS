@@ -21,8 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BrowsingActivity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".BrowsingActivity"  />
+        <activity android:name=".ProfileActivity"  />
         <activity android:name=".ViewDataActivity" />
         <activity android:name=".UploadDataActivity" />
         <activity android:name=".LoginActivity" />
