@@ -3,6 +3,8 @@ package powerprogress.powerprogress;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,12 +15,41 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class MainMenuActivity extends AppCompatActivity {
-    TextView helloTextTest;
+
     FirebaseAuth firebaseAuth;
+    ImageView imageViewUpload;
+    ImageView imageViewProfile;
+    ImageView imageViewBrowse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        imageViewUpload = (ImageView)findViewById(R.id.imv_upload_mainmenuActivity);
+        imageViewProfile = (ImageView)findViewById(R.id.imv_profile_mainmenuActivity);
+        imageViewBrowse = (ImageView)findViewById(R.id.imv_search_mainmenuActivity);
+
+        imageViewUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent uploadIntent = new Intent(MainMenuActivity.this, UploadDataActivity.class);
+                startActivity(uploadIntent);
+            }
+        });
+        imageViewBrowse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent BrowsingIntent = new Intent(MainMenuActivity.this, BrowsingActivity.class);
+                startActivity(BrowsingIntent);
+            }
+        });
+        imageViewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ProfileIntent = new Intent(MainMenuActivity.this, ProfileActivity.class);
+                startActivity(ProfileIntent);
+            }
+        });
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -27,12 +58,7 @@ public class MainMenuActivity extends AppCompatActivity {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
-        else
-        {
-            Intent TestIntent = new Intent(MainMenuActivity.this,ProfileActivity.class);
-            startActivity(TestIntent);
-        }
-        helloTextTest = (TextView)findViewById(R.id.test);
+
 
 
 /*        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference();

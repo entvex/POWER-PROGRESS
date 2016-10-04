@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_upload_data"
     android:layout_width="match_parent"
@@ -12,16 +13,46 @@
 
     <VideoView
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:id="@+id/vvw_displayVideo_UploadDataActivity"
-        android:layout_alignParentTop="true"
+        android:layout_height="200dp"
+        android:id="@+id/vvw_displayVideo_UploadDataActivity" />
+
+    <Button
+        android:text="Record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_getVideo_UploadDataActivity"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@+id/vvw_displayVideo_UploadDataActivity"
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="Button"
+        android:text="Submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/vvw_displayVideo_UploadDataActivity"
+        android:id="@+id/btn_submit_UploadDataActivity"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:id="@+id/pgb_upload_UploadDataActivty"
+        android:layout_centerHorizontal="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/PPOrange"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pgb_upload_UploadDataActivty"
         android:layout_alignParentStart="true"
-        android:id="@+id/btn_getVideo_UploadDataActivity" />
+        android:layout_marginTop="13dp"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/pgb_uploadH_UploadDataActivity"
+        android:indeterminateTintMode="src_over"
+        android:indeterminateTint="@color/PPOrange"/>
+
 </RelativeLayout>

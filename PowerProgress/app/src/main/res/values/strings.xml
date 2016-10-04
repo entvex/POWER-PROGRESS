@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PowerProgress</string>
+    <string name="staticlogin_LoginActivity">Please Login using your Google+</string>
 </resources>

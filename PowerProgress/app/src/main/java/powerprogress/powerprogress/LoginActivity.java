@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         };
 
-        Button btn_signin_loginAcativity = (Button)findViewById(R.id.btn_signin_loginActivity);
+        ImageView btn_signin_loginAcativity = (ImageView) findViewById(R.id.imv_signin_loginActivity);
         btn_signin_loginAcativity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +97,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+                Toast.makeText(this,"Succesfully logged in as "+account.getDisplayName(),Toast.LENGTH_SHORT);
             } else {
 
             }

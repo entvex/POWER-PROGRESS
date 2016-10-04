@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_menu"
     android:layout_width="match_parent"
@@ -8,11 +9,49 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="powerprogress.powerprogress.MainMenuActivity">
+    tools:context="powerprogress.powerprogress.MainMenuActivity"
+    android:background="@android:color/background_dark">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/test" />
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+    <TableRow android:id="@+id/TableRow01"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    <ImageView
+        android:layout_width="178dp"
+        android:layout_height="200dp"
+        app:srcCompat="@drawable/exstra"
+        android:id="@+id/imv_other_mainmenuActivity" />
+
+    <ImageView
+        android:layout_width="178dp"
+        android:layout_height="200dp"
+        app:srcCompat="@drawable/browse"
+        android:id="@+id/imv_search_mainmenuActivity" />
+
+    </TableRow>
+
+        <TableRow android:id="@+id/TableRow02"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:layout_width="178dp"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/upload"
+                android:id="@+id/imv_upload_mainmenuActivity"/>
+
+            <ImageView
+            android:layout_width="178dp"
+            android:layout_height="200dp"
+            app:srcCompat="@drawable/profile"
+            android:id="@+id/imv_profile_mainmenuActivity"
+    />
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>
