@@ -20,8 +20,6 @@ import static powerprogress.powerprogress.R.id.ttv_email_profileActivity;
 
 public class MainMenuActivity extends AppCompatActivity {
 
-    static final int LOGIN_REQUEST_CODE = 100;  // The request code
-
     FirebaseAuth firebaseAuth;
     DatabaseReference firebaseDatabase;
     ImageView imageViewUpload;
@@ -64,38 +62,7 @@ public class MainMenuActivity extends AppCompatActivity {
         if (firebaseAuth.getCurrentUser() == null) {
 
             Intent loginIntent = new Intent(this, LoginActivity.class);
-            startActivityForResult(loginIntent,LOGIN_REQUEST_CODE);
+            startActivity(loginIntent);
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //The users should now be logined in therefor get getCurrentUser.
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance().getReference();
-
-        if (requestCode == LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
-            createProfile();
-        }
-    }
-
-    private void createProfile()
-    {
-        //Save the profile in firebase
-        firebaseAuth = FirebaseAuth.getInstance();
-        Profile userProfile = new Profile();
-
-        //TODO THERE MUST BE A BETTER WAY
-        //SADLY THIS FXIES IT
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        userProfile.setName(firebaseAuth.getCurrentUser().getDisplayName());
-        userProfile.setEmail(firebaseAuth.getCurrentUser().getEmail());
-
-        firebaseDatabase.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".",",")).setValue(userProfile);
     }
 }

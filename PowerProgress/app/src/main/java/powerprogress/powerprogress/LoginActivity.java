@@ -25,6 +25,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -32,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int RC_SIGN_IN = 9001;
 
     private FirebaseAuth mAuth;
+    DatabaseReference firebaseDatabase;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -43,6 +48,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -93,6 +99,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
 
+                createProfile(account);
+
                 Toast.makeText(this,"Succesfully logged in as "+account.getDisplayName(),Toast.LENGTH_SHORT);
                 setResult(RESULT_OK);
                 finish();
@@ -138,4 +146,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
+
+    private void createProfile(GoogleSignInAccount account)
+    {
+        //Save the profile in firebase
+        Profile userProfile = new Profile();
+
+        userProfile.setName(account.getDisplayName());
+        userProfile.setEmail(account.getEmail());
+
+        firebaseDatabase.child(FireBaseProfile_KEY).child(account.getEmail().replace(".",",")).setValue(userProfile);
+    }
+
 }
