@@ -82,7 +82,16 @@ public class MainMenuActivity extends AppCompatActivity {
     private void createProfile()
     {
         //Save the profile in firebase
+        firebaseAuth = FirebaseAuth.getInstance();
         Profile userProfile = new Profile();
+
+        //TODO THERE MUST BE A BETTER WAY
+        //SADLY THIS FXIES IT
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         userProfile.setName(firebaseAuth.getCurrentUser().getDisplayName());
         userProfile.setEmail(firebaseAuth.getCurrentUser().getEmail());
