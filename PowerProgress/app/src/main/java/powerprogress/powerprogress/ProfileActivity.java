@@ -1,5 +1,6 @@
 package powerprogress.powerprogress;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +57,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Finding UI
         btn_ok_profileActivity = (Button) findViewById(R.id.btn_ok_profileActivity);
+
+        ImageView imv_profilePhoto_ProfileActivity = (ImageView) findViewById(R.id.imv_profilePhoto_ProfileActivity);
+
         ttv_name_profileActivity = (TextView) findViewById(R.id.ttv_name_profileActivity);
         ttv_email_profileActivity = (TextView) findViewById(R.id.ttv_email_profileActivity);
         ett_age_profileActivity = (EditText) findViewById(R.id.ett_age_profileActivity);
@@ -62,6 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
         ckb_BenchPress_profileActivity = (CheckBox) findViewById(R.id.ckb_BenchPress_profileActivity);
         ckb_overheadpress_profileActivity = (CheckBox) findViewById(R.id.ckb_overheadpress_profileActivity);
         ckb_Squat_profileActivity = (CheckBox) findViewById(R.id.ckb_Squat_profileActivity);
+
 
         //query for existing user
         firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -77,6 +84,15 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        //Load image using Picasso
+        if (firebaseAuth.getCurrentUser().getPhotoUrl() != null)
+        {
+            Picasso.with(getApplicationContext())
+                    .load(firebaseAuth.getCurrentUser().getPhotoUrl())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(imv_profilePhoto_ProfileActivity);
+        }
+
         btn_ok_profileActivity.setOnClickListener(new View.OnClickListener() {
             //TODO DONT SAVE IF NO VALUES
 
@@ -84,35 +100,34 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Save the profile in firebase
 
-
                 if ( !ttv_email_profileActivity.getText().equals("") && !ett_age_profileActivity.getText().equals("") ) {
-                    Profile userProfile = getFilledProfile();
+                    ProfileDTO userProfileDTO = getFilledProfile();
 
                     //Save To firebase
-                    firebaseDatabase.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".", ",")).setValue(userProfile);
+                    firebaseDatabase.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".", ",")).setValue(userProfileDTO);
                     finish();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"Fill out empty fields or wait for data to load",Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(), R.string.profileWaitWhileLoadingOrHaveNoEmptyFields,Toast.LENGTH_LONG);
                 }
             }
         });
     }
 
     @NonNull
-    private Profile getFilledProfile() {
-        Profile userProfile = new Profile();
+    private ProfileDTO getFilledProfile() {
+        ProfileDTO userProfileDTO = new ProfileDTO();
 
         //User info
-        userProfile.setAge(ett_age_profileActivity.getText().toString());
-        userProfile.setName(firebaseAuth.getCurrentUser().getDisplayName().toString());
-        userProfile.setEmail(ttv_email_profileActivity.getText().toString());
+        userProfileDTO.setAge(ett_age_profileActivity.getText().toString());
+        userProfileDTO.setName(firebaseAuth.getCurrentUser().getDisplayName().toString());
+        userProfileDTO.setEmail(ttv_email_profileActivity.getText().toString());
 
-        List<String> options = (userProfile.getOptions() == null ? new ArrayList<String>() : userProfile.getOptions());
+        List<String> options = (userProfileDTO.getOptions() == null ? new ArrayList<String>() : userProfileDTO.getOptions());
         //User options
         if (ckb_deadlift_profileActivity.isChecked()) {
             options.add(option_Deadlift);
-            userProfile.setOptions(options);
+            userProfileDTO.setOptions(options);
         }
         else {
             options.remove(option_Deadlift);
@@ -120,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (ckb_BenchPress_profileActivity.isChecked()) {
             options.add(option_BenchPress);
-            userProfile.setOptions(options);
+            userProfileDTO.setOptions(options);
         }
         else {
             options.remove(option_BenchPress);
@@ -128,7 +143,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (ckb_overheadpress_profileActivity.isChecked()) {
             options.add(option_OverheadPress);
-            userProfile.setOptions(options);
+            userProfileDTO.setOptions(options);
         }
         else {
             options.remove(option_OverheadPress);
@@ -136,18 +151,19 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (ckb_Squat_profileActivity.isChecked()) {
             options.add(option_Squat);
-            userProfile.setOptions(options);
+            userProfileDTO.setOptions(options);
         }
         else {
             options.remove(option_Squat);
         }
-        return userProfile;
+
+        return userProfileDTO;
     }
 
     private void updateUI(DataSnapshot dataSnapshot)
     {
         String userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".",",");
-        Profile userProfile = dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).getValue(Profile.class);
+        ProfileDTO userProfileDTO = dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).getValue(ProfileDTO.class);
         ttv_name_profileActivity.setText(dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).child("name").getValue().toString());
         ttv_email_profileActivity.setText(dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).child("email").getValue().toString());
 
@@ -158,17 +174,17 @@ public class ProfileActivity extends AppCompatActivity {
             ett_age_profileActivity.setText("18");
         }
 
-        if (userProfile.getOptions() != null) {
-            if (userProfile.getOptions().contains(option_Deadlift))
+        if (userProfileDTO.getOptions() != null) {
+            if (userProfileDTO.getOptions().contains(option_Deadlift))
                 ckb_deadlift_profileActivity.setChecked(true);
 
-            if (userProfile.getOptions().contains(option_BenchPress))
+            if (userProfileDTO.getOptions().contains(option_BenchPress))
                 ckb_BenchPress_profileActivity.setChecked(true);
 
-            if (userProfile.getOptions().contains(option_OverheadPress))
+            if (userProfileDTO.getOptions().contains(option_OverheadPress))
                 ckb_overheadpress_profileActivity.setChecked(true);
 
-            if (userProfile.getOptions().contains(option_Squat))
+            if (userProfileDTO.getOptions().contains(option_Squat))
                 ckb_Squat_profileActivity.setChecked(true);
         }
     }

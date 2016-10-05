@@ -4,8 +4,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-public class BackgroundService extends Service {
-    public BackgroundService() {
+public class BackgroundNotificationService extends Service {
+    public BackgroundNotificationService() {
+
+
     }
 
     @Override

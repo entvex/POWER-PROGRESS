@@ -2,17 +2,24 @@ package powerprogress.powerprogress;
 
 import java.util.List;
 
-public class Profile
+public class ProfileDTO
 {
     private String email;
     private String name;
     private String age;
     private String description;
     private List<String> options;
-    private List<String> uploads;
+    private List<UploadDTO> uploads;
 
-    public Profile()
+    public ProfileDTO()
     {
+    }
+
+    public ProfileDTO(String email, String name, String age)
+    {
+        this.email = email;
+        this.name  = name;
+        this.age   = age;
     }
 
     public void setName(String name) {
@@ -31,7 +38,7 @@ public class Profile
         this.options = options;
     }
 
-    public void setUploads(List<String> uploads) {
+    public void setUploads(List<UploadDTO> uploads) {
         this.uploads = uploads;
     }
 
@@ -59,7 +66,7 @@ public class Profile
         return options;
     }
 
-    public List<String> getUploads() {
+    public List<UploadDTO> getUploads() {
         return uploads;
     }
 
@@ -75,3 +82,6 @@ public class Profile
         }
     }
 }
+
+
+

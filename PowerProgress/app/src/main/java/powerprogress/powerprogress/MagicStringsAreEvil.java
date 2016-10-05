@@ -13,6 +13,4 @@ public class MagicStringsAreEvil {
     public static String option_BenchPress = "BenchPress";
     public static String option_OverheadPress = "Overhead press";
     public static String option_Squat = "Squat";
-
-
 }

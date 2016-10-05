@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PowerProgress</string>
     <string name="staticlogin_LoginActivity">Please Login using your Google+</string>
+    <string name="profileWaitWhileLoadingOrHaveNoEmptyFields">Fill out empty fields or wait for data to load</string>
 </resources>
