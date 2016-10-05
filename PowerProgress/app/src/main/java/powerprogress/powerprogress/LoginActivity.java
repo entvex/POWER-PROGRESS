@@ -33,8 +33,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private FirebaseAuth mAuth;
 
-
-
     private FirebaseAuth.AuthStateListener mAuthListener;
 
 
@@ -57,10 +55,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-
         mAuth = FirebaseAuth.getInstance();
-
-
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -97,7 +92,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+
                 Toast.makeText(this,"Succesfully logged in as "+account.getDisplayName(),Toast.LENGTH_SHORT);
+                setResult(RESULT_OK);
+                finish();
             } else {
 
             }

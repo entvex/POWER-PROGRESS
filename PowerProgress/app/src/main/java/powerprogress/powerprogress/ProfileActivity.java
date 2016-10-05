@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -18,13 +19,15 @@ import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KE
 
 public class ProfileActivity extends AppCompatActivity {
 
+    //Firebase
     FirebaseAuth firebaseAuth;
     DatabaseReference firebaseDatabase;
 
+    //UI
     EditText ett_age_profileActivity;
-
     TextView ttv_name_profileActivity;
     TextView ttv_email_profileActivity;
+    Button btn_ok_profileActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +38,9 @@ public class ProfileActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
         //Finding UI
-        Button btn_ok_profileActivity = (Button) findViewById(R.id.btn_ok_profileActivity);
+        btn_ok_profileActivity = (Button) findViewById(R.id.btn_ok_profileActivity);
         ttv_name_profileActivity = (TextView) findViewById(R.id.ttv_name_profileActivity);
         ttv_email_profileActivity = (TextView) findViewById(R.id.ttv_email_profileActivity);
-
         ett_age_profileActivity = (EditText) findViewById(R.id.ett_age_profileActivity);
 
         //query for existing user
@@ -51,20 +53,21 @@ public class ProfileActivity extends AppCompatActivity {
                     //Load Profile
                     Profile userProfile = dataSnapshot.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".",",")).getValue(Profile.class);
 
-/*                    ttv_name_profileActivity.setText(dataSnapshot.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".",",")).child("name").getValue().toString());
-                    ttv_name_profileActivity.setText(dataSnapshot.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".",",")).child("age").getValue().toString());*/
-                    int i = 1+1;
+                    ttv_name_profileActivity.setText(dataSnapshot.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".",",")).child("name").getValue().toString());
+                    ttv_name_profileActivity.setText(dataSnapshot.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".",",")).child("age").getValue().toString());
                 }
                 else {
                     ttv_name_profileActivity.setText(firebaseAuth.getCurrentUser().getDisplayName());
                     ttv_email_profileActivity.setText(firebaseAuth.getCurrentUser().getEmail());
                     ett_age_profileActivity.setText("18");
                 }
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
+                Toast.makeText(getApplicationContext(),"databaseError",Toast.LENGTH_LONG).show();
+                finish();
 
             }
         });
@@ -87,8 +90,13 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void updateGUI(Profile profile)
+    private void loadingScreen()
     {
+
+        btn_ok_profileActivity.setVisibility(View.GONE);
+        ttv_name_profileActivity.setVisibility(View.GONE);
+        ttv_email_profileActivity.setVisibility(View.GONE);
+        ett_age_profileActivity.setVisibility(View.VISIBLE);
 
     }
 

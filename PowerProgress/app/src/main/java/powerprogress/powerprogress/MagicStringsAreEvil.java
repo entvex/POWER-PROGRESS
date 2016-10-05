@@ -6,6 +6,10 @@ package powerprogress.powerprogress;
 
 public class MagicStringsAreEvil {
 
+
+
+
+
     public static String FireBaseProfile_KEY = "Profile";
 
 }
