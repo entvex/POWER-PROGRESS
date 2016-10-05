@@ -1,41 +1,34 @@
 package powerprogress.powerprogress;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ThemedSpinnerAdapter;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-
-import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
-import static powerprogress.powerprogress.R.id.ttv_email_profileActivity;
 
 public class MainMenuActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
-    DatabaseReference firebaseDatabase;
     ImageView imageViewUpload;
     ImageView imageViewProfile;
     ImageView imageViewBrowse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        firebaseDatabase = FirebaseDatabase.getInstance().getReference();
+        // Enabling Offline Capabilities
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         firebaseAuth = FirebaseAuth.getInstance();
 
-        imageViewUpload = (ImageView)findViewById(R.id.imv_upload_mainmenuActivity);
-        imageViewProfile = (ImageView)findViewById(R.id.imv_profile_mainmenuActivity);
-        imageViewBrowse = (ImageView)findViewById(R.id.imv_search_mainmenuActivity);
+        imageViewUpload = (ImageView) findViewById(R.id.imv_upload_mainmenuActivity);
+        imageViewProfile = (ImageView) findViewById(R.id.imv_profile_mainmenuActivity);
+        imageViewBrowse = (ImageView) findViewById(R.id.imv_search_mainmenuActivity);
 
         imageViewUpload.setOnClickListener(new View.OnClickListener() {
             @Override
