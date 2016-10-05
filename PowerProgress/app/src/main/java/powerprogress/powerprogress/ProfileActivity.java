@@ -1,5 +1,6 @@
 package powerprogress.powerprogress;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
+import static powerprogress.powerprogress.MagicStringsAreEvil.option_BenchPress;
+import static powerprogress.powerprogress.MagicStringsAreEvil.option_Deadlift;
+import static powerprogress.powerprogress.MagicStringsAreEvil.option_OverheadPress;
+import static powerprogress.powerprogress.MagicStringsAreEvil.option_Squat;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -32,7 +37,11 @@ public class ProfileActivity extends AppCompatActivity {
     TextView ttv_name_profileActivity;
     TextView ttv_email_profileActivity;
     Button btn_ok_profileActivity;
-    CheckBox ckb_deadlift_profile;
+
+    CheckBox ckb_deadlift_profileActivity;
+    CheckBox ckb_BenchPress_profileActivity;
+    CheckBox ckb_overheadpress_profileActivity;
+    CheckBox ckb_Squat_profileActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +57,11 @@ public class ProfileActivity extends AppCompatActivity {
         ttv_name_profileActivity = (TextView) findViewById(R.id.ttv_name_profileActivity);
         ttv_email_profileActivity = (TextView) findViewById(R.id.ttv_email_profileActivity);
         ett_age_profileActivity = (EditText) findViewById(R.id.ett_age_profileActivity);
-        ckb_deadlift_profile = (CheckBox) findViewById(R.id.ckb_deadlift_profile);
+
+        ckb_deadlift_profileActivity = (CheckBox) findViewById(R.id.ckb_deadlift_profileActivity);
+        ckb_BenchPress_profileActivity = (CheckBox) findViewById(R.id.ckb_BenchPress_profileActivity);
+        ckb_overheadpress_profileActivity = (CheckBox) findViewById(R.id.ckb_overheadpress_profileActivity);
+        ckb_Squat_profileActivity = (CheckBox) findViewById(R.id.ckb_Squat_profileActivity);
 
         //query for existing user
         firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -73,22 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
                 if ( !ttv_email_profileActivity.getText().equals("") && !ett_age_profileActivity.getText().equals("") ) {
-                    Profile userProfile = new Profile();
-
-                    //User info
-                    userProfile.setAge(ett_age_profileActivity.getText().toString());
-                    userProfile.setName(firebaseAuth.getCurrentUser().getDisplayName().toString());
-                    userProfile.setEmail(ttv_email_profileActivity.getText().toString());
-
-                    //User options
-                    if (ckb_deadlift_profile.isChecked())
-                    {
-                        //List<String> options = userProfile.getOptions();
-                        //List<String> options = userProfile.getOptions().isEmpty() ? null : new ArrayList<String>();
-
-                        //options.add("deadlift");
-                        //userProfile.setOptions(options);
-                    }
+                    Profile userProfile = getFilledProfile();
 
                     //Save To firebase
                     firebaseDatabase.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".", ",")).setValue(userProfile);
@@ -101,6 +99,51 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    @NonNull
+    private Profile getFilledProfile() {
+        Profile userProfile = new Profile();
+
+        //User info
+        userProfile.setAge(ett_age_profileActivity.getText().toString());
+        userProfile.setName(firebaseAuth.getCurrentUser().getDisplayName().toString());
+        userProfile.setEmail(ttv_email_profileActivity.getText().toString());
+
+        List<String> options = (userProfile.getOptions() == null ? new ArrayList<String>() : userProfile.getOptions());
+        //User options
+        if (ckb_deadlift_profileActivity.isChecked()) {
+            options.add(option_Deadlift);
+            userProfile.setOptions(options);
+        }
+        else {
+            options.remove(option_Deadlift);
+        }
+
+        if (ckb_BenchPress_profileActivity.isChecked()) {
+            options.add(option_BenchPress);
+            userProfile.setOptions(options);
+        }
+        else {
+            options.remove(option_BenchPress);
+        }
+
+        if (ckb_overheadpress_profileActivity.isChecked()) {
+            options.add(option_OverheadPress);
+            userProfile.setOptions(options);
+        }
+        else {
+            options.remove(option_OverheadPress);
+        }
+
+        if (ckb_Squat_profileActivity.isChecked()) {
+            options.add(option_Squat);
+            userProfile.setOptions(options);
+        }
+        else {
+            options.remove(option_Squat);
+        }
+        return userProfile;
+    }
+
     private void updateUI(DataSnapshot dataSnapshot)
     {
         String userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".",",");
@@ -108,13 +151,25 @@ public class ProfileActivity extends AppCompatActivity {
         ttv_name_profileActivity.setText(dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).child("name").getValue().toString());
         ttv_email_profileActivity.setText(dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).child("email").getValue().toString());
 
-        if( dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).child("age").exists())
-        {
+        if( dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).child("age").exists()) {
             ett_age_profileActivity.setText(dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).child("age").getValue().toString());
         }
-        else
-        {
+        else {
             ett_age_profileActivity.setText("18");
+        }
+
+        if (userProfile.getOptions() != null) {
+            if (userProfile.getOptions().contains(option_Deadlift))
+                ckb_deadlift_profileActivity.setChecked(true);
+
+            if (userProfile.getOptions().contains(option_BenchPress))
+                ckb_BenchPress_profileActivity.setChecked(true);
+
+            if (userProfile.getOptions().contains(option_OverheadPress))
+                ckb_overheadpress_profileActivity.setChecked(true);
+
+            if (userProfile.getOptions().contains(option_Squat))
+                ckb_Squat_profileActivity.setChecked(true);
         }
     }
 

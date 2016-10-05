@@ -124,12 +124,12 @@
         android:text="DeadLift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ckb_deadlift_profile"
-        android:layout_marginStart="16dp"
+        android:id="@+id/ckb_deadlift_profileActivity"
+        android:layout_marginStart="40dp"
         app:layout_constraintLeft_toLeftOf="@+id/activity_profile"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="@+id/activity_profile"
-        android:layout_marginBottom="141dp" />
+        android:layout_marginBottom="152dp" />
 
     <TextView
         android:text="Interests"
@@ -142,5 +142,42 @@
         app:layout_constraintTop_toBottomOf="@+id/ett_age_profileActivity"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/ett_age_profileActivity" />
+
+    <CheckBox
+        android:text="Squat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ckb_Squat_profileActivity"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/ckb_overheadpress_profileActivity"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="22dp"
+        app:layout_constraintLeft_toLeftOf="@+id/ckb_overheadpress_profileActivity" />
+
+    <CheckBox
+        android:text="BenchPress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ckb_BenchPress_profileActivity"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/ckb_deadlift_profileActivity"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/ckb_deadlift_profileActivity" />
+
+    <CheckBox
+        android:text="Overhead Press"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ckb_overheadpress_profileActivity"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_ok_profileActivity"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_profile"
+        android:layout_marginTop="88dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        android:layout_marginBottom="91dp" />
 
 </android.support.constraint.ConstraintLayout>
