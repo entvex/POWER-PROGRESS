@@ -136,7 +136,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/activity_profile" />
 
     <TextView
-        android:text="Interests"
+        android:text="Qualifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
