@@ -180,14 +180,14 @@ public class UploadDataActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         int nextUploadNumber = 0;
 
-        List<UploadDTO> uploads = userProfile.getUploads();
+        List<String> uploads = userProfile.getUploads();
         if(uploads != null) {
             Log.d("Upload amount", " found" + uploads.size() + "previous uploads");
             nextUploadNumber = uploads.size();
         }
         else {
             Log.d("Upload amount", " no previous uploads");
-            uploads = new ArrayList<UploadDTO>();
+            uploads = new ArrayList<String>();
         }
         String uploadname= firebaseAuth.getCurrentUser().getEmail().replace(".", ",") + "-"+ nextUploadNumber;
         UploadDTO newSubmission = new UploadDTO();
@@ -197,7 +197,7 @@ public class UploadDataActivity extends AppCompatActivity {
         Toast.makeText(this,newSubmission.getDate(),Toast.LENGTH_LONG);
 
         firebaseDatabase.child("Submissions").child(uploadname).setValue(newSubmission);
-        uploads.add(newSubmission);
+        uploads.add(uploadname);
         userProfile.setUploads(uploads);
 
         //set child document to users name + identifier

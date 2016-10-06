@@ -5,10 +5,11 @@
     android:id="@+id/activity_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_google_signin_btn_text_light_pressed"
+    android:background="@color/PPDark"
     tools:context="powerprogress.powerprogress.ProfileActivity">
 
     <TextView
+        android:textColor="@color/PPText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
@@ -36,8 +37,8 @@
         tools:layout_constraintLeft_creator="1" />
 
     <TextView
+        android:textColor="@color/PPText"
         android:text="Name"
-        android:background="@color/PPOrange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_Lable_name_profileActivity"
@@ -49,7 +50,7 @@
         app:layout_constraintTop_toTopOf="@+id/activity_profile" />
 
     <TextView
-        android:background="@color/PPOrange"
+        android:textColor="@color/PPText"
         android:text="Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +63,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/activity_profile" />
 
     <TextView
-        android:background="@color/PPOrange"
+        android:textColor="@color/PPText"
         android:text="Age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +76,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/activity_profile" />
 
     <TextView
-        android:background="@color/PPOrange"
+        android:textColor="@color/PPText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_name_profileActivity"
@@ -88,7 +89,7 @@
         tools:layout_constraintLeft_creator="1" />
 
     <TextView
-        android:background="@color/PPOrange"
+        android:textColor="@color/PPText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_email_profileActivity"
@@ -101,10 +102,9 @@
         tools:layout_constraintLeft_creator="1" />
 
     <EditText
-        android:background="@color/PPOrange"
         android:textColorLink="?attr/colorBackgroundFloating"
-        android:textColor="@android:color/white"
-        android:textColorHint="#FFFFFF"
+        android:textColor="@color/PPText"
+        android:textColorHint="@color/PPText"
         android:layout_width="92dp"
         android:layout_height="46dp"
         android:inputType="numberSigned"
@@ -133,7 +133,7 @@
         android:background="@color/PPOrange" />
 
     <CheckBox
-        android:background="@color/PPOrange"
+        android:textColor="@color/PPText"
         android:text="DeadLift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -149,22 +149,24 @@
         app:layout_constraintLeft_toLeftOf="@+id/activity_profile" />
 
     <TextView
-        android:background="@color/PPOrange"
+        android:textColor="@color/PPOrange"
         android:text="Qualifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
+        android:id="@+id/ttv_qualifications_profileActivity"
         app:layout_constraintRight_toRightOf="@+id/activity_profile"
         app:layout_constraintLeft_toLeftOf="@+id/activity_profile"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/ett_age_profileActivity"
-        tools:layout_constraintLeft_creator="1" />
+        tools:layout_constraintLeft_creator="1"
+        android:textStyle="bold"
+        android:textSize="18sp" />
 
     <CheckBox
-        android:background="@color/PPOrange"
         android:text="Squat"
+        android:textColor="@color/PPText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ckb_Squat_profileActivity"
@@ -176,7 +178,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/activity_profile" />
 
     <CheckBox
-        android:background="@color/PPOrange"
+        android:textColor="@color/PPText"
         android:text="BenchPress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -189,7 +191,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/activity_profile" />
 
     <CheckBox
-        android:background="@color/PPOrange"
+        android:textColor="@color/PPText"
         android:text="Overhead Press"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

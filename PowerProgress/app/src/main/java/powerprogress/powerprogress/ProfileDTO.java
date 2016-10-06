@@ -9,7 +9,7 @@ public class ProfileDTO
     private String age;
     private String description;
     private List<String> options;
-    private List<UploadDTO> uploads;
+    private List<String> uploads;
 
     public ProfileDTO()
     {
@@ -38,7 +38,7 @@ public class ProfileDTO
         this.options = options;
     }
 
-    public void setUploads(List<UploadDTO> uploads) {
+    public void setUploads(List<String> uploads) {
         this.uploads = uploads;
     }
 
@@ -66,7 +66,7 @@ public class ProfileDTO
         return options;
     }
 
-    public List<UploadDTO> getUploads() {
+    public List<String> getUploads() {
         return uploads;
     }
 
