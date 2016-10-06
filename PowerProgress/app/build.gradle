@@ -40,6 +40,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
 
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
 }
 apply plugin: 'com.google.gms.google-services'
