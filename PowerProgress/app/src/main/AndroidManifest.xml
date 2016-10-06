@@ -22,10 +22,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".BrowsingActivity"  />
-        <activity android:name=".ProfileActivity"  />
+        <activity android:name=".ProfileActivity"   />
         <activity android:name=".ViewDataActivity" />
-        <activity android:name=".UploadDataActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".UploadDataActivity" android:screenOrientation="portrait" />
+        <activity android:name=".LoginActivity" android:screenOrientation="portrait" />
 
         <service
             android:name=".BackgroundService"

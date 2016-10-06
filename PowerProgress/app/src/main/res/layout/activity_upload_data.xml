@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="powerprogress.powerprogress.UploadDataActivity"
-    android:background="@color/common_google_signin_btn_text_light_pressed">
+    android:background="@color/PPDark">
 
     <VideoView
         android:layout_width="wrap_content"
@@ -63,21 +63,42 @@
         android:background="@color/PPOrange"
         android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/edt_comment_UploadDataActivity"
-        android:hint="Type your question here"
-        android:textSize="14sp"
-        android:layout_below="@+id/btn_replayVideo_UploadDataActivity"
+    <CheckBox
+        android:text="@string/option_deadlift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chb_deadlift_UploadDataActivity"
+        android:textColor="@color/PPText"
+        android:layout_below="@+id/chb_ohp_UploadDataActivity"
+        android:layout_alignStart="@+id/btn_submit_UploadDataActivity" />
+
+    <CheckBox
+        android:text="@string/option_overheadpress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chb_ohp_UploadDataActivity"
+        android:textColor="@color/PPText"
+        android:layout_above="@+id/chb_bench_UploadDataActivity"
+        android:layout_alignStart="@+id/chb_deadlift_UploadDataActivity" />
+
+    <CheckBox
+        android:text="@string/option_bench"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chb_bench_UploadDataActivity"
+        android:textColor="@color/PPText"
+        android:layout_above="@+id/btn_submit_UploadDataActivity"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chb_squat_UploadDataActivity"
+        android:textColor="@color/PPText"
+        android:text="@string/option_squat"
+        android:layout_above="@+id/chb_bench_UploadDataActivity"
         android:layout_alignParentStart="true"
-        android:textColorLink="?attr/colorBackgroundFloating"
-        android:textColor="@android:color/white"
-        android:selectAllOnFocus="false"
-        android:textColorHint="#FFFFFF"
-        android:textAlignment="center" />
+        android:layout_toStartOf="@+id/chb_deadlift_UploadDataActivity" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
@@ -89,5 +110,37 @@
         android:layout_below="@+id/pgb_upload_UploadDataActivty"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/edt_title_UploadDataActivity"
+        android:hint="Type Titel here"
+        android:textSize="14sp"
+        android:textColorLink="?attr/colorBackgroundFloating"
+        android:textColor="@android:color/white"
+        android:selectAllOnFocus="false"
+        android:textColorHint="#FFFFFF"
+        android:textAlignment="center"
+        android:layout_below="@+id/btn_replayVideo_UploadDataActivity"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/edt_comment_UploadDataActivity"
+        android:hint="Type your question here"
+        android:textSize="14sp"
+        android:textColorLink="?attr/colorBackgroundFloating"
+        android:textColor="@android:color/white"
+        android:selectAllOnFocus="false"
+        android:textColorHint="#FFFFFF"
+        android:textAlignment="center"
+        android:layout_below="@+id/edt_title_UploadDataActivity"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

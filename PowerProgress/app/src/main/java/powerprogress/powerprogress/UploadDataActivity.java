@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ import static powerprogress.powerprogress.MagicStringsAreEvil.option_BenchPress;
 import static powerprogress.powerprogress.MagicStringsAreEvil.option_Deadlift;
 import static powerprogress.powerprogress.MagicStringsAreEvil.option_OverheadPress;
 import static powerprogress.powerprogress.MagicStringsAreEvil.option_Squat;
+import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseSubmissions_KEY;
+import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseStorage_URL;
 
 public class UploadDataActivity extends AppCompatActivity {
 
@@ -48,6 +51,7 @@ public class UploadDataActivity extends AppCompatActivity {
     Button submitDataBtn;
     Button replayVideoBtn;
     EditText editComment;
+    EditText editTitel;
 
     ProgressBar progressBar;
     ProgressBar progressBarHor;
@@ -56,6 +60,11 @@ public class UploadDataActivity extends AppCompatActivity {
     DatabaseReference firebaseDatabase;
     Uri currentVideo;
 
+    CheckBox optionSquat;
+    CheckBox optionDeadlift;
+    CheckBox optionBench;
+    CheckBox optionOHP;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,16 +72,24 @@ public class UploadDataActivity extends AppCompatActivity {
         videoView = (VideoView) findViewById(R.id.vvw_displayVideo_UploadDataActivity);
 
         getVideoBtn = (Button)findViewById(R.id.btn_getVideo_UploadDataActivity);
-        editComment = (EditText)findViewById(R.id.edt_comment_UploadDataActivity);
         submitDataBtn = (Button)findViewById(R.id.btn_submit_UploadDataActivity);
         replayVideoBtn = (Button)findViewById(R.id.btn_replayVideo_UploadDataActivity);
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
+
+        optionBench = (CheckBox) findViewById(R.id.chb_bench_UploadDataActivity);
+        optionSquat = (CheckBox) findViewById(R.id.chb_squat_UploadDataActivity);
+        optionDeadlift = (CheckBox) findViewById(R.id.chb_deadlift_UploadDataActivity);
+        optionOHP = (CheckBox) findViewById(R.id.chb_ohp_UploadDataActivity);
 
         progressBar = (ProgressBar) findViewById(R.id.pgb_upload_UploadDataActivty);
         progressBar.setVisibility(View.GONE);
         progressBarHor = (ProgressBar) findViewById(R.id.pgb_uploadH_UploadDataActivity);
         progressBarHor.setVisibility(View.GONE);
+
+        editComment = (EditText)findViewById(R.id.edt_comment_UploadDataActivity);
+        editTitel = (EditText)findViewById(R.id.edt_title_UploadDataActivity);
 
 
         getVideoBtn.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +191,7 @@ public class UploadDataActivity extends AppCompatActivity {
 
     public void UploadData() {
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReferenceFromUrl("gs://power-progress.appspot.com");
+        StorageReference storageReference = firebaseStorage.getReferenceFromUrl(FireBaseStorage_URL);
 
         //fetch instance of firebase auth
         firebaseAuth = FirebaseAuth.getInstance();
@@ -190,13 +207,28 @@ public class UploadDataActivity extends AppCompatActivity {
             uploads = new ArrayList<String>();
         }
         String uploadname= firebaseAuth.getCurrentUser().getEmail().replace(".", ",") + "-"+ nextUploadNumber;
+
         UploadDTO newSubmission = new UploadDTO();
         newSubmission.setName(uploadname);
         newSubmission.setDescription(editComment.getText().toString());
-        newSubmission.setTitel("this is the titel");
+        newSubmission.setTitel(editTitel.getText().toString());
+
+        //options
+        List<String> options = new ArrayList<String>();
+        if(optionSquat.isChecked())
+        { options.add(option_Squat); }
+        if(optionBench.isChecked())
+        { options.add(option_BenchPress); }
+        if(optionOHP.isChecked())
+        { options.add(option_OverheadPress); }
+        if(optionDeadlift.isChecked())
+        { options.add(option_Deadlift); }
+
+        newSubmission.setOptions(options);
+
         Toast.makeText(this,newSubmission.getDate(),Toast.LENGTH_LONG);
 
-        firebaseDatabase.child("Submissions").child(uploadname).setValue(newSubmission);
+        firebaseDatabase.child(FireBaseSubmissions_KEY).child(uploadname).setValue(newSubmission);
         uploads.add(uploadname);
         userProfile.setUploads(uploads);
 
@@ -210,33 +242,35 @@ public class UploadDataActivity extends AppCompatActivity {
         submitDataBtn.setVisibility(View.GONE);
         replayVideoBtn.setVisibility(View.GONE);
         editComment.setVisibility(View.GONE);
+        editTitel.setVisibility(View.GONE);
         videoView.setVisibility(View.GONE);
+        optionOHP.setVisibility(View.GONE);
+        optionBench.setVisibility(View.GONE);
+        optionDeadlift.setVisibility(View.GONE);
+        optionSquat.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         progressBarHor.setVisibility(View.VISIBLE);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("upload", "onFailure: ", e);
+                Log.e("upload", "upload failed with error: ", e);
             }
         });
 
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.d("upload", "onSuccess: ");
+                Log.d("upload", "Sucess ");
 
                 if ( !firebaseAuth.getCurrentUser().equals(null) ) {
 
 
                     //Save To firebase
-                    firebaseDatabase.child("Profile").child(firebaseAuth.getCurrentUser().getEmail().replace(".", ",")).setValue(userProfile);
+                    firebaseDatabase.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".", ",")).setValue(userProfile);
 
-                    finish();
                 }
-                else {
-                    Toast.makeText(getApplicationContext(), R.string.profileWaitWhileLoadingOrHaveNoEmptyFields,Toast.LENGTH_LONG);
-                }
+
 
                 finish();
             }
