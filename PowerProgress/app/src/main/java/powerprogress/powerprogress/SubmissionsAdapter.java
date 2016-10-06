@@ -15,13 +15,13 @@ import java.util.List;
  * Created by entvex on 06-10-2016.
  */
 
-public class submissionsAdapter extends BaseAdapter {
+public class SubmissionsAdapter extends BaseAdapter {
 
     Context context;
     List<UploadDTO> uploadDTOs;
     UploadDTO uploadDTO;
 
-    public submissionsAdapter(Context context, List<UploadDTO> uploadDTOses)
+    public SubmissionsAdapter(Context context, List<UploadDTO> uploadDTOs)
     {
         this.context   = context;
         this.uploadDTOs = uploadDTOs;
@@ -60,7 +60,7 @@ public class submissionsAdapter extends BaseAdapter {
         if(uploadDTO != null)
         {
             TextView ttv_videoTitle_videoListItem = (TextView) convertView.findViewById(R.id.ttv_videoTitle_videoListItem);
-            ttv_videoTitle_videoListItem.setText(uploadDTO.getDescription());
+            ttv_videoTitle_videoListItem.setText(uploadDTO.getTitel());
 
             TextView ttv_description_videoListItem = (TextView) convertView.findViewById(R.id.ttv_description_videoListItem);
             ttv_description_videoListItem.setText(uploadDTO.getDescription());

@@ -7,6 +7,7 @@ package powerprogress.powerprogress;
 public class MagicStringsAreEvil {
     //Firebase
     public static String FireBaseProfile_KEY = "Profile";
+    public static String FireBaseSubmissions_KEY = "Submissions";
 
     public static String option_Deadlift = "Deadlift";
     public static String option_BenchPress = "BenchPress";
