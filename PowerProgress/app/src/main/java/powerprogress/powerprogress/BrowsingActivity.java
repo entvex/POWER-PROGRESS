@@ -2,6 +2,8 @@ package powerprogress.powerprogress;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +23,8 @@ public class BrowsingActivity extends AppCompatActivity {
     //Firebase
     FirebaseAuth firebaseAuth;
     DatabaseReference firebaseDatabase;
+
+    List<UploadDTO> uploadDTOs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,5 +59,19 @@ public class BrowsingActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+        ltv_listOfSubmitsions_BrowsingActivity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                UploadDTO uploadDTO = uploadDTOs.get(position);
+
+                //TODO make intent and sent it off to ViewdataActivity
+            }
+        });
+
+
     }
 }
