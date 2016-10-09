@@ -70,6 +70,30 @@ public class ViewDataActivity extends AppCompatActivity {
                 //this might need to sub . for , for name to work properly
                 submission = dataSnapshot.child(FireBaseSubmissions_KEY).child(videoKey).getValue(UploadDTO.class);
 
+                titel.setText(submission.getTitel());
+                description.setText(submission.getDescription());
+
+                //Time to Get the Video from the Database
+                StorageReference storageReference = firebaseStorage.getReferenceFromUrl(FireBaseStorage_URL);
+
+                storageReference.child(submission.getName().replace(",",".")).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        currentVideo = uri;
+
+                        videoView.setVideoURI(currentVideo);
+                        videoView.start();
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+
+
+
             }
 
 
@@ -79,28 +103,6 @@ public class ViewDataActivity extends AppCompatActivity {
 
             }
         });
-
-        titel.setText(submission.getTitel());
-        description.setText(submission.getDescription());
-
-
-        //Time to Get the Video from the Database
-        StorageReference storageReference = firebaseStorage.getReferenceFromUrl(FireBaseStorage_URL);
-
-        storageReference.child(submission.getName()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                currentVideo = uri;
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
-
-
-
 
         videoView.setOnClickListener(new View.OnClickListener() {
             @Override

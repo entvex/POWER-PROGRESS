@@ -264,14 +264,9 @@ public class UploadDataActivity extends AppCompatActivity {
                 Log.d("upload", "Sucess ");
 
                 if ( !firebaseAuth.getCurrentUser().equals(null) ) {
-
-
                     //Save To firebase
                     firebaseDatabase.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".", ",")).setValue(userProfile);
-
                 }
-
-
                 finish();
             }
         });

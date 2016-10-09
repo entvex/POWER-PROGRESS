@@ -47,7 +47,7 @@ public class BrowsingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                List<UploadDTO> uploadDTOs = new ArrayList<UploadDTO>();
+                uploadDTOs = new ArrayList<UploadDTO>();
 
                 for (DataSnapshot submission: dataSnapshot.child(FireBaseSubmissions_KEY).getChildren()) {
                     UploadDTO uploadDTO = submission.getValue(UploadDTO.class);

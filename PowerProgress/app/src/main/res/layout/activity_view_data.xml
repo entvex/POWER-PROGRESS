@@ -12,18 +12,25 @@
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:id="@+id/vvw_displayVideo_ViewDataActivity"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:text="Titel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="200dp"
-        tools:layout_editor_absoluteX="176dp"
         android:id="@+id/txt_titel_ViewDataActivity"
         android:textSize="24sp"
-        android:textColor="@color/PPText" />
+        android:textColor="@color/PPText"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="210dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
@@ -35,25 +42,35 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <TextView
+        android:textColor="@color/PPText"
         android:text="comment"
+        android:inputType="textMultiLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="257dp"
         android:id="@+id/txt_description_ViewDataActivity"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:textColor="@color/PPText" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginTop="5dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        android:textSize="18sp" />
 
     <android.support.design.widget.FloatingActionButton
-        android:layout_width="61dp"
+        android:layout_width="58dp"
         android:layout_height="58dp"
         android:clickable="true"
         app:fabSize="mini"
         app:srcCompat="@mipmap/ic_launcher"
-        tools:layout_editor_absoluteY="453dp"
-        tools:layout_editor_absoluteX="323dp"
-        android:id="@+id/fab_option_ViewDataActivity" />
+        android:id="@+id/fab_option_ViewDataActivity"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="92dp" />
 
 </android.support.constraint.ConstraintLayout>
