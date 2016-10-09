@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,9 +33,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // Initializing Service
-        Intent intent = new Intent(MainMenuActivity.this, BackgroundNotificationService.class);
-        startService(intent);
+        // Initializing BackgroundNotificationService
+        Intent notificationService = new Intent(MainMenuActivity.this, BackgroundNotificationService.class);
+        startService(notificationService);
 
         imageViewUpload = (ImageView) findViewById(R.id.imv_upload_mainmenuActivity);
         imageViewProfile = (ImageView) findViewById(R.id.imv_profile_mainmenuActivity);
@@ -73,8 +74,8 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Intent intent = new Intent(MainMenuActivity.this, BackgroundNotificationService.class);
-        bindService(intent, mConnection, getApplicationContext().BIND_AUTO_CREATE);
+        Intent notificationService = new Intent(MainMenuActivity.this, BackgroundNotificationService.class);
+        bindService(notificationService, mConnection, getApplicationContext().BIND_AUTO_CREATE);
     }
 
     @Override

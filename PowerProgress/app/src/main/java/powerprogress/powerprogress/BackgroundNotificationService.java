@@ -1,12 +1,12 @@
 package powerprogress.powerprogress;
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,9 +29,15 @@ public class BackgroundNotificationService extends Service {
     FirebaseAuth firebaseAuth;
     DatabaseReference firebaseDatabase;
 
+    List<String> oldUploads, newUploads;
+
     Timer serviceTimer;
     int interval = 1; // minutes waiting between datachecks
-    int timerInterval = 60*1000*interval;
+    int timerInterval = 60 * 1000 * interval;
+
+    NotificationManager commentManager;
+    boolean commentManagerActive = false;
+    int commentManagerID = 10;
 
     public BackgroundNotificationService() {
     }
@@ -39,28 +46,16 @@ public class BackgroundNotificationService extends Service {
     public void onCreate() {
         super.onCreate();
 
+        // Firebase setup
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
-        firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".",",");
-                userProfile = dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).getValue(ProfileDTO.class);
-                Log.d("NotificationService",userProfile.getName() + " : " + userProfile.getEmail() );
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        // Setup the timer to check for new comments
         serviceTimer = new Timer();
         serviceTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Log.d("NotificationService", " run: getting data");
+                Log.d("NotificationService", "Started Notification Timer");
                 new CheckForNewData().execute();
             }
         }, timerInterval);
@@ -68,11 +63,9 @@ public class BackgroundNotificationService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-
+        // Return the communication channel to the service.
         Log.d("NotificationService", "Binding");
-
-        throw new UnsupportedOperationException("Not yet implemented");
+        return iNotificationBinder;
     }
 
 
@@ -84,18 +77,48 @@ public class BackgroundNotificationService extends Service {
         }
     }
 
-    private class CheckForNewData extends AsyncTask<Void, Void, String> {
+    // Check for new comments
+    private class CheckForNewData extends AsyncTask<Void, Void, Void> {
         @Override
-        protected String doInBackground(Void... params) {
+        protected Void doInBackground(Void... params) {
             Log.d("NotificationService", "CheckForNewData executed");
 
+            firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".", ",");
+                    userProfile = dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).getValue(ProfileDTO.class);
+                    Log.d("NotificationService", userProfile.getName() + " : " + userProfile.getEmail());
+
+                    newUploads = userProfile.getUploads();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            if (oldUploads != null) {
+                for (int i = 0; i < newUploads.size(); i++) {
+
+                    // TODO Iterate through uploads and check if there is a new comment
+
+                    int newComments = 2; //TODO remove when tested
+
+                    if (newComments > 0) {
+
+                    }
+                }
+            }
+            oldUploads = newUploads;
             return null;
         }
 
         @Override
-        protected void onPostExecute(String message) {
-            super.onPostExecute(message);
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
         }
-    }
 
+    }
 }
