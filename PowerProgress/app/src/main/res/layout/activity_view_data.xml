@@ -5,7 +5,8 @@
     android:id="@+id/activity_view_data"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="powerprogress.powerprogress.ViewDataActivity">
+    tools:context="powerprogress.powerprogress.ViewDataActivity"
+    android:background="@color/PPDark">
 
     <VideoView
         android:layout_width="wrap_content"
@@ -15,12 +16,14 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <TextView
-        android:text="TextView"
+        android:text="Titel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="200dp"
         tools:layout_editor_absoluteX="176dp"
-        android:id="@+id/textView2" />
+        android:id="@+id/txt_titel_ViewDataActivity"
+        android:textSize="24sp"
+        android:textColor="@color/PPText" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
@@ -31,10 +34,26 @@
         tools:layout_editor_absoluteY="252dp"
         tools:layout_editor_absoluteX="0dp" />
 
-    <ListView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        tools:layout_editor_absoluteY="252dp"
-        tools:layout_editor_absoluteX="105dp" />
+    <TextView
+        android:text="comment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="257dp"
+        android:id="@+id/txt_description_ViewDataActivity"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textColor="@color/PPText" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="61dp"
+        android:layout_height="58dp"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:layout_editor_absoluteY="453dp"
+        tools:layout_editor_absoluteX="323dp"
+        android:id="@+id/fab_option_ViewDataActivity" />
 
 </android.support.constraint.ConstraintLayout>

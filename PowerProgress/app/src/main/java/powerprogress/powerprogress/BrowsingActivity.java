@@ -1,7 +1,9 @@
 package powerprogress.powerprogress;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,6 +21,8 @@ import java.util.List;
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseSubmissions_KEY;
 
 public class BrowsingActivity extends AppCompatActivity {
+
+
 
     //Firebase
     FirebaseAuth firebaseAuth;
@@ -67,6 +71,10 @@ public class BrowsingActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 UploadDTO uploadDTO = uploadDTOs.get(position);
+                Intent viewDataIntent = new Intent(view.getContext(), ViewDataActivity.class);
+                viewDataIntent.putExtra("Submission", uploadDTO.getName());
+                Log.d("Intent","Start new Intent for showing submission");
+                startActivity(viewDataIntent);
 
                 //TODO make intent and sent it off to ViewdataActivity
             }
