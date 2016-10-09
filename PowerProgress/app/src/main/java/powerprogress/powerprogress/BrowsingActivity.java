@@ -41,11 +41,8 @@ public class BrowsingActivity extends AppCompatActivity {
 
                 List<UploadDTO> uploadDTOs = new ArrayList<UploadDTO>();
 
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    UploadDTO uploadDTO = dataSnapshot.child(FireBaseSubmissions_KEY).getValue(UploadDTO.class);
-                    //TODO FIX issue getting all the data from object!!
-                    uploadDTO.setTitel("squat gandhi");
-                    uploadDTO.setDescription("I am strong");
+                for (DataSnapshot submission: dataSnapshot.child(FireBaseSubmissions_KEY).getChildren()) {
+                    UploadDTO uploadDTO = submission.getValue(UploadDTO.class);
                     uploadDTOs.add(uploadDTO);
                 }
 
