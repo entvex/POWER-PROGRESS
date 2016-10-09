@@ -4,8 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <uses-feature android:name="android.hardware.Camera2" />
 
     <application
@@ -21,16 +22,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BrowsingActivity"  />
-        <activity android:name=".ProfileActivity"   />
+        <activity android:name=".BrowsingActivity" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".ViewDataActivity" />
-        <activity android:name=".UploadDataActivity" android:screenOrientation="portrait" />
-        <activity android:name=".LoginActivity" android:screenOrientation="portrait" />
+        <activity
+            android:name=".UploadDataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".BackgroundService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".ReadCommentActivity" />
+        <activity android:name=".AddCommentActivity"></activity>
     </application>
 
 </manifest>

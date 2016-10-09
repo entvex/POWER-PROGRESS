@@ -8,7 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,7 +40,7 @@ import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseStorage_UR
 
 public class ViewDataActivity extends AppCompatActivity {
 
-
+    static final int ADD_COMMENT_REQUEST = 999;
     Boolean videoPlaying;
     TextView description;
     TextView titel;
@@ -47,6 +53,9 @@ public class ViewDataActivity extends AppCompatActivity {
     FirebaseStorage firebaseStorage;
 
     FloatingActionButton FABbutton;
+    FloatingActionButton FABbuttonOptionAdd;
+    FloatingActionButton FABbuttonOptionRead;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +65,15 @@ public class ViewDataActivity extends AppCompatActivity {
         titel = (TextView) findViewById(R.id.txt_titel_ViewDataActivity);
         videoView = (VideoView) findViewById(R.id.vvw_displayVideo_ViewDataActivity);
         FABbutton = (FloatingActionButton) findViewById(R.id.fab_option_ViewDataActivity);
+        FABbuttonOptionAdd = (FloatingActionButton) findViewById(R.id.fab_addComment_ViewDataActivity);
+        FABbuttonOptionRead = (FloatingActionButton) findViewById(R.id.fab_seeComment_ViewDataActivity);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance();
         Intent intent = getIntent();
         videoKey = intent.getStringExtra("Submission");
         videoPlaying = false;
+
 
 
         firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -104,20 +116,57 @@ public class ViewDataActivity extends AppCompatActivity {
             }
         });
 
-        videoView.setOnClickListener(new View.OnClickListener() {
+
+        FABbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(FABbuttonOptionAdd.getVisibility() == View.GONE)
+                {
 
-                videoPlaying = !videoPlaying;
+                    FABbuttonOptionAdd.setVisibility(View.VISIBLE);
+                    FABbuttonOptionRead.setVisibility(View.VISIBLE);
 
-                if(videoPlaying) {
-                    videoView.setVideoURI(currentVideo);
-                    videoView.start();
-                }else{
-                    videoView.stopPlayback();
+                }
+                else
+                {
+                    FABbuttonOptionAdd.setVisibility(View.GONE);
+                    FABbuttonOptionRead.setVisibility(View.GONE);
                 }
             }
         });
 
+        FABbuttonOptionAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Onclick","ADDCOMMENT");
+                Intent addCommentIntent = new Intent(v.getContext(),AddCommentActivity.class);
+                startActivityForResult(addCommentIntent,ADD_COMMENT_REQUEST);
+
+            }
+        });
+
+        FABbuttonOptionRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Onclick","READCOMMENTS");
+                Intent ReadIntent = new Intent(v.getContext(),ReadCommentActivity.class);
+                ReadIntent.putExtra("Submission", submission.getName());
+                startActivity(ReadIntent);
+
+            }
+        });
+
+
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {
+
+        if (requestCode == ADD_COMMENT_REQUEST) {
+
+            if (resultCode == RESULT_OK) {
+
+                //getDatafrom resultIntent
+                Log.d("Intent result","got result OK from Intent ADD_COMMENT");
+            }
+        }
     }
 }
