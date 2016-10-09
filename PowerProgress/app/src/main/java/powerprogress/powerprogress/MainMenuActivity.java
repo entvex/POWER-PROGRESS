@@ -1,7 +1,10 @@
 package powerprogress.powerprogress;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +19,9 @@ public class MainMenuActivity extends AppCompatActivity {
     ImageView imageViewProfile;
     ImageView imageViewBrowse;
 
+    BackgroundNotificationService notificationService;
+    boolean notificationBound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +31,10 @@ public class MainMenuActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        // Initializing Service
+        Intent intent = new Intent(MainMenuActivity.this, BackgroundNotificationService.class);
+        startService(intent);
 
         imageViewUpload = (ImageView) findViewById(R.id.imv_upload_mainmenuActivity);
         imageViewProfile = (ImageView) findViewById(R.id.imv_profile_mainmenuActivity);
@@ -58,4 +68,39 @@ public class MainMenuActivity extends AppCompatActivity {
             startActivity(loginIntent);
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Intent intent = new Intent(MainMenuActivity.this, BackgroundNotificationService.class);
+        bindService(intent, mConnection, getApplicationContext().BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Unbind from the service
+        if (notificationBound) {
+            unbindService(mConnection);
+            notificationBound = false;
+        }
+    }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            BackgroundNotificationService.NotificationBinder binder = (BackgroundNotificationService.NotificationBinder) service;
+            notificationService = binder.getService();
+            notificationBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            notificationBound = false;
+        }
+    };
 }
