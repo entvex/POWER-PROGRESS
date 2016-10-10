@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/profilebutton"
+            android:id="@+id/imv_profile_mainmenuActivity"
+            android:background="@color/PPDark"
+            android:layout_weight="1"
+            android:padding="8dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/uploadbutton"
+            android:id="@+id/imv_upload_mainmenuActivity"
+            android:background="@color/PPOrange"
+            android:layout_weight="1"
+            android:padding="8dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/browsebutton"
+            android:id="@+id/imv_search_mainmenuActivity"
+            android:background="@color/PPOrange"
+            android:layout_weight="1"
+            android:padding="8dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/timerbutton"
+            android:id="@+id/imv_other_mainmenuActivity"
+            android:background="@color/PPDark"
+            android:layout_weight="1"
+            android:padding="8dp" />
+
+    </LinearLayout>
+</LinearLayout>

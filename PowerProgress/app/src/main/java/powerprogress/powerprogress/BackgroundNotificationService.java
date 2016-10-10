@@ -68,7 +68,7 @@ public class BackgroundNotificationService extends Service {
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
         SharedPreferences settings = getSharedPreferences(notificationTimer, MODE_PRIVATE);
-        timerInterval = settings.getInt(notificationTimer, 60 * 1000 * interval);
+        timerInterval = settings.getInt(notificationTimerInterval, 60 * 1000 * interval);
         StartTimer(timerInterval);
     }
 
@@ -196,7 +196,7 @@ public class BackgroundNotificationService extends Service {
 
             SharedPreferences settings = getSharedPreferences(notificationTimer, MODE_PRIVATE);
 
-            if (settings.getInt(notificationTimer, 60 * 1000 * interval) != timerInterval) {
+            if (settings.getInt(notificationTimerInterval, 60 * 1000 * interval) != timerInterval) {
                 timerInterval = settings.getInt(notificationTimerInterval, 60 * 1000 * interval);
                 StartTimer(timerInterval);
             }
@@ -210,12 +210,14 @@ public class BackgroundNotificationService extends Service {
                 .setContentTitle("Power Progress")
                 .setContentText(uploadNames + " got new comments")
                 .setTicker("You have new comments")
-                .setSmallIcon(R.drawable.commentnotification);
+                .setSmallIcon(R.drawable.commentnotification)
+                .setAutoCancel(true)
+                .setVibrate(new long[] {500, 500 });
 
-        Intent mainMenuIntent = new Intent(this, BrowsingActivity.class);
+        Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
 
         TaskStackBuilder tStackBuilder = TaskStackBuilder.create(this);
-        tStackBuilder.addParentStack(BrowsingActivity.class);
+        tStackBuilder.addParentStack(MainMenuActivity.class);
         tStackBuilder.addNextIntent(mainMenuIntent);
 
         PendingIntent pendingIntent = tStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);

@@ -29,7 +29,9 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         // Enabling Offline Capabilities
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        if (FirebaseDatabase.getInstance() == null) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
 
         firebaseAuth = FirebaseAuth.getInstance();
 
