@@ -3,6 +3,7 @@ package powerprogress.powerprogress;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -112,6 +113,35 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        Log.d("onSaveInstanceState", "option_Deadlift: " + ckb_deadlift_profileActivity.isChecked() );
+        savedInstanceState.putBoolean(option_Deadlift, ckb_deadlift_profileActivity.isChecked());
+
+        Log.d("onSaveInstanceState", "option_BenchPress: " + ckb_BenchPress_profileActivity.isChecked() );
+        savedInstanceState.putBoolean(option_BenchPress, ckb_BenchPress_profileActivity.isChecked());
+
+        //savedInstanceState.putBoolean(option_OverheadPress,ckb_overheadpress_profileActivity.isChecked());
+        //savedInstanceState.putBoolean(option_Squat,ckb_Squat_profileActivity.isChecked());
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        Log.d("onRestoreInstanceState", "option_Deadlift: " + savedInstanceState.getBoolean(option_Deadlift) );
+        ckb_deadlift_profileActivity.setChecked(savedInstanceState.getBoolean(option_Deadlift));
+
+        Log.d("onRestoreInstanceState", "option_BenchPress: " + savedInstanceState.getBoolean(option_BenchPress) );
+        ckb_BenchPress_profileActivity.setChecked(savedInstanceState.getBoolean(option_BenchPress));
+
+        //ckb_overheadpress_profileActivity.setChecked(savedInstanceState.getBoolean(option_OverheadPress));
+        //ckb_Squat_profileActivity.setChecked(savedInstanceState.getBoolean(option_Squat));
     }
 
     @NonNull
