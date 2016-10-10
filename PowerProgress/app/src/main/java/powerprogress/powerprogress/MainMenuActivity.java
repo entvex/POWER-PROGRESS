@@ -94,7 +94,7 @@ public class MainMenuActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
 
-            BackgroundNotificationService.NotificationBinder binder = (BackgroundNotificationService.NotificationBinder) service;
+            BackgroundNotificationService.ServiceBinder binder = (BackgroundNotificationService.ServiceBinder) service;
             notificationService = binder.getService();
             notificationBound = true;
         }
