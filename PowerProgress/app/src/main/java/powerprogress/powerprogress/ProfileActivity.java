@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
+import static powerprogress.powerprogress.MagicStringsAreEvil.ProfileAge_KEY;
+import static powerprogress.powerprogress.MagicStringsAreEvil.ProfileEmail_KEY;
+import static powerprogress.powerprogress.MagicStringsAreEvil.ProfileName_KEY;
 import static powerprogress.powerprogress.MagicStringsAreEvil.option_BenchPress;
 import static powerprogress.powerprogress.MagicStringsAreEvil.option_Deadlift;
 import static powerprogress.powerprogress.MagicStringsAreEvil.option_OverheadPress;
@@ -34,6 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
     //Firebase
     FirebaseAuth firebaseAuth;
     DatabaseReference firebaseDatabase;
+    static boolean downloadedDataOnce = false;
 
     //UI
     EditText ett_age_profileActivity;
@@ -47,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     CheckBox ckb_Squat_profileActivity;
 
     //UserProfile
-    ProfileDTO userProfileDTO;
+    static ProfileDTO userProfileDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,19 +77,24 @@ public class ProfileActivity extends AppCompatActivity {
         ckb_Squat_profileActivity = (CheckBox) findViewById(R.id.ckb_Squat_profileActivity);
 
 
-        //query for existing user
-        firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                updateUI(dataSnapshot);
-            }
+        //Only download data once
+        if (downloadedDataOnce == false)
+        {
+            //query for existing user
+            firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    updateUI(dataSnapshot);
+                    downloadedDataOnce = true;
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(), "databaseError", Toast.LENGTH_LONG).show();
-                finish();
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(getApplicationContext(), "databaseError", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            });
+        }
 
         //Load image using Picasso
         if (firebaseAuth.getCurrentUser().getPhotoUrl() != null) {
@@ -107,9 +116,10 @@ public class ProfileActivity extends AppCompatActivity {
 
                     //Save To firebase
                     firebaseDatabase.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".", ",")).setValue(userProfileDTO);
+                    downloadedDataOnce = false;
                     finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.profileWaitWhileLoadingOrHaveNoEmptyFields, Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(), R.string.profileWaitWhileLoadingOrHaveNoEmptyFields, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -117,15 +127,17 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save the user's current game state
-        Log.d("onSaveInstanceState", "option_Deadlift: " + ckb_deadlift_profileActivity.isChecked() );
+
+        //Text
+        savedInstanceState.putString(ProfileName_KEY,ttv_name_profileActivity.getText().toString());
+        savedInstanceState.putString(ProfileEmail_KEY,ttv_email_profileActivity.getText().toString());
+        savedInstanceState.putString(ProfileAge_KEY,ett_age_profileActivity.getText().toString());
+
+        //Checkboxes
         savedInstanceState.putBoolean(option_Deadlift, ckb_deadlift_profileActivity.isChecked());
-
-        Log.d("onSaveInstanceState", "option_BenchPress: " + ckb_BenchPress_profileActivity.isChecked() );
         savedInstanceState.putBoolean(option_BenchPress, ckb_BenchPress_profileActivity.isChecked());
-
-        //savedInstanceState.putBoolean(option_OverheadPress,ckb_overheadpress_profileActivity.isChecked());
-        //savedInstanceState.putBoolean(option_Squat,ckb_Squat_profileActivity.isChecked());
+        savedInstanceState.putBoolean(option_OverheadPress,ckb_overheadpress_profileActivity.isChecked());
+        savedInstanceState.putBoolean(option_Squat,ckb_Squat_profileActivity.isChecked());
 
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -134,14 +146,16 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        Log.d("onRestoreInstanceState", "option_Deadlift: " + savedInstanceState.getBoolean(option_Deadlift) );
+        //Text
+        ttv_name_profileActivity.setText(savedInstanceState.getString(ProfileName_KEY));
+        ttv_email_profileActivity.setText(savedInstanceState.getString(ProfileEmail_KEY));
+        ett_age_profileActivity.setText(savedInstanceState.getString(ProfileAge_KEY));
+
+        //CkeckBoxes
         ckb_deadlift_profileActivity.setChecked(savedInstanceState.getBoolean(option_Deadlift));
-
-        Log.d("onRestoreInstanceState", "option_BenchPress: " + savedInstanceState.getBoolean(option_BenchPress) );
         ckb_BenchPress_profileActivity.setChecked(savedInstanceState.getBoolean(option_BenchPress));
-
-        //ckb_overheadpress_profileActivity.setChecked(savedInstanceState.getBoolean(option_OverheadPress));
-        //ckb_Squat_profileActivity.setChecked(savedInstanceState.getBoolean(option_Squat));
+        ckb_overheadpress_profileActivity.setChecked(savedInstanceState.getBoolean(option_OverheadPress));
+        ckb_Squat_profileActivity.setChecked(savedInstanceState.getBoolean(option_Squat));
     }
 
     @NonNull

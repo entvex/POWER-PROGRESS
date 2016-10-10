@@ -17,9 +17,9 @@ public class MagicStringsAreEvil {
     public static String option_Squat = "Squat";
 
 
-    //onSaveInstanceStateKeys
-
-
-
+    //onSaveInstanceStateKeysForProfile
+    public static String ProfileName_KEY = "ProfileName";
+    public static String ProfileAge_KEY = "ProfileAge";
+    public static String ProfileEmail_KEY = "ProfileEmail";
 
 }
