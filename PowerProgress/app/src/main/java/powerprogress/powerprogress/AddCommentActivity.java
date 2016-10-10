@@ -21,7 +21,6 @@ public class AddCommentActivity extends AppCompatActivity {
         submitBtn = (Button)findViewById(R.id.btn_submitComment_AddCommentActivity);
         comment = (EditText)findViewById(R.id.edt_comment_AddCommentActivity);
 
-
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,7 +33,7 @@ public class AddCommentActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(v.getContext(),"Please Type more than 10 characters", Toast.LENGTH_LONG);
+                    Toast.makeText(v.getContext(),"Please Type more than 10 characters", Toast.LENGTH_LONG).show();
 
                 }
             }

@@ -29,6 +29,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
 import static powerprogress.powerprogress.MagicStringsAreEvil.option_BenchPress;
 import static powerprogress.powerprogress.MagicStringsAreEvil.option_Deadlift;
@@ -152,7 +155,6 @@ public class ViewDataActivity extends AppCompatActivity {
                 Intent ReadIntent = new Intent(v.getContext(),ReadCommentActivity.class);
                 ReadIntent.putExtra("Submission", submission.getName());
                 startActivity(ReadIntent);
-
             }
         });
 
@@ -165,6 +167,21 @@ public class ViewDataActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
 
                 //getDatafrom resultIntent
+
+                //HoeBoeDataInsertPrettyAsFuckYeah
+                CommentDTO commentDTO = new CommentDTO();
+                commentDTO.setAuthor("Kasper Torp");
+                commentDTO.setVotes(666);
+                commentDTO.setComment("nfidjfosdjfsdjfejoiwefjiowefjweofjwioefjewo");
+
+                List<CommentDTO> commentDTOs = new ArrayList<>();
+                commentDTOs.add(commentDTO);
+
+                submission.setComments(commentDTOs);
+
+
+
+
                 Log.d("Intent result","got result OK from Intent ADD_COMMENT");
             }
         }

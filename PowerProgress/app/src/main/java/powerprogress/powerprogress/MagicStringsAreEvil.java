@@ -5,6 +5,9 @@ package powerprogress.powerprogress;
  */
 
 public class MagicStringsAreEvil {
+
+    //!!! DO NOT EXTERNALICE THESE THEY ARE FOR INTERNAL USE ONLY !!
+
     //Firebase
     public static String FireBaseProfile_KEY = "Profile";
     public static String FireBaseSubmissions_KEY = "Submissions";

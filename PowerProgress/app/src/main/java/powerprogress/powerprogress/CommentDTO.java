@@ -1,28 +1,25 @@
 package powerprogress.powerprogress;
 
-import java.util.List;
-
 /**
  * Created by K on 05-10-2016.
  */
 
 public class CommentDTO {
 
-    private String commentId;
+    private String author;
     private String comment;
     private String timestamp;
     private int votes;
 
     CommentDTO() {}
 
-    public void setcommentId(String commentId) {
-        this.commentId = commentId;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public String getCommentId() {
-        return commentId;
+    public String getAuthor() {
+        return author;
     }
-
 
     public String getComment() {
         return comment;

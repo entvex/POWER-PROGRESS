@@ -18,17 +18,18 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseSubmissions_KEY;
+import static powerprogress.powerprogress.ProfileActivity.userProfileDTO;
 
 public class BrowsingActivity extends AppCompatActivity {
-
-
 
     //Firebase
     FirebaseAuth firebaseAuth;
     DatabaseReference firebaseDatabase;
 
     List<UploadDTO> uploadDTOs;
+    ListView ltv_listOfSubmitsions_BrowsingActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +41,33 @@ public class BrowsingActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
         //Find UI
-        final ListView ltv_listOfSubmitsions_BrowsingActivity = (ListView) findViewById(R.id.ltv_listOfSubmitsions_BrowsingActivity);
+        ltv_listOfSubmitsions_BrowsingActivity = (ListView) findViewById(R.id.ltv_listOfSubmitsions_BrowsingActivity);
 
         //query for existing submissions
         firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                //FindUsers preferences
+                userProfileDTO = dataSnapshot.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".",",")).getValue(ProfileDTO.class);
+
                 uploadDTOs = new ArrayList<UploadDTO>();
 
+                //Loop tho all submissions and only keep the once that are interresting for the user
                 for (DataSnapshot submission: dataSnapshot.child(FireBaseSubmissions_KEY).getChildren()) {
-                    UploadDTO uploadDTO = submission.getValue(UploadDTO.class);
-                    uploadDTOs.add(uploadDTO);
-                }
 
+                    UploadDTO uploadDTO = submission.getValue(UploadDTO.class);
+
+                    if (userProfileDTO.getOptions() != null) {
+
+                        for (String option : userProfileDTO.getOptions()) {
+                            if (uploadDTO.getOptions().contains(option)) {
+                                uploadDTOs.add(uploadDTO);
+                                break;
+                            }
+                        }
+                    }
+                }
                 SubmissionsAdapter submissionsAdapter = new SubmissionsAdapter(getApplicationContext(),uploadDTOs);
                 ltv_listOfSubmitsions_BrowsingActivity.setAdapter(submissionsAdapter);
             }
@@ -66,6 +80,9 @@ public class BrowsingActivity extends AppCompatActivity {
 
 
 
+
+
+
         ltv_listOfSubmitsions_BrowsingActivity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -75,11 +92,7 @@ public class BrowsingActivity extends AppCompatActivity {
                 viewDataIntent.putExtra("Submission", uploadDTO.getName());
                 Log.d("Intent","Start new Intent for showing submission");
                 startActivity(viewDataIntent);
-
-                //TODO make intent and sent it off to ViewdataActivity
             }
         });
-
-
     }
 }
