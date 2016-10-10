@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,21 +16,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
+import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseSubmissions_KEY;
 
 public class BackgroundNotificationService extends Service {
 
     private final IBinder iNotificationBinder = new NotificationBinder();
 
+    List<UploadDTO> oldUploadDTOs;
+    List<UploadDTO> newUploadDTOs;
     ProfileDTO userProfile;
     FirebaseAuth firebaseAuth;
     DatabaseReference firebaseDatabase;
 
-    List<String> oldUploads, newUploads;
+    List<String> uploads;
 
     Timer serviceTimer;
     int interval = 1; // minutes waiting between datachecks
@@ -45,6 +50,10 @@ public class BackgroundNotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        uploads = new ArrayList<String>();
+        newUploadDTOs = new ArrayList<UploadDTO>();
+        oldUploadDTOs = new ArrayList<UploadDTO>();
 
         // Firebase setup
         firebaseAuth = FirebaseAuth.getInstance();
@@ -90,7 +99,7 @@ public class BackgroundNotificationService extends Service {
                     userProfile = dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).getValue(ProfileDTO.class);
                     Log.d("NotificationService", userProfile.getName() + " : " + userProfile.getEmail());
 
-                    newUploads = userProfile.getUploads();
+                    uploads = userProfile.getUploads();
                 }
 
                 @Override
@@ -99,8 +108,26 @@ public class BackgroundNotificationService extends Service {
                 }
             });
 
-            if (oldUploads != null) {
-                for (int i = 0; i < newUploads.size(); i++) {
+            if (uploads != null) {
+
+
+                    firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (int i = 0; i < uploads.size(); i++) {
+
+                                String uploadName = uploads.get(i);
+                                newUploadDTOs.add(dataSnapshot.child(FireBaseSubmissions_KEY).child(uploadName).getValue(UploadDTO.class));
+                            }
+
+                            }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
 
                     // TODO Iterate through uploads and check if there is a new comment
 
@@ -110,8 +137,7 @@ public class BackgroundNotificationService extends Service {
 
                     }
                 }
-            }
-            oldUploads = newUploads;
+            // TODO new to old
             return null;
         }
 
@@ -119,6 +145,12 @@ public class BackgroundNotificationService extends Service {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
         }
+
+    }
+
+
+    public void StartNotification(){
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
 
     }
 }

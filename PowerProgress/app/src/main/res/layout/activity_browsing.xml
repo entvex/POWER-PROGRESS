@@ -5,7 +5,8 @@
     android:id="@+id/activity_browsing"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="powerprogress.powerprogress.BrowsingActivity">
+    tools:context="powerprogress.powerprogress.BrowsingActivity"
+    android:background="@color/PPDark">
 
     <ListView
         android:layout_width="0dp"

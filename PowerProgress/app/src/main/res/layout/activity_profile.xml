@@ -130,7 +130,8 @@
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="5dp"
         app:layout_constraintLeft_toLeftOf="@+id/activity_profile"
-        android:background="@color/PPOrange" />
+        android:background="@color/PPOrange"
+        android:textColor="@color/PPText"/>
 
     <CheckBox
         android:textColor="@color/PPText"
