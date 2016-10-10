@@ -33,10 +33,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // Initializing BackgroundNotificationService
-        Intent notificationService = new Intent(MainMenuActivity.this, BackgroundNotificationService.class);
-        startService(notificationService);
-
         imageViewUpload = (ImageView) findViewById(R.id.imv_upload_mainmenuActivity);
         imageViewProfile = (ImageView) findViewById(R.id.imv_profile_mainmenuActivity);
         imageViewBrowse = (ImageView) findViewById(R.id.imv_search_mainmenuActivity);
@@ -68,6 +64,10 @@ public class MainMenuActivity extends AppCompatActivity {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
+
+        // Initializing BackgroundNotificationService
+        Intent notificationService = new Intent(MainMenuActivity.this, BackgroundNotificationService.class);
+        startService(notificationService);
     }
 
     @Override

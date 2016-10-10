@@ -1,12 +1,16 @@
 package powerprogress.powerprogress;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,19 +30,19 @@ import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseSubmission
 
 public class BackgroundNotificationService extends Service {
 
-    private final IBinder iNotificationBinder = new NotificationBinder();
+    private final IBinder iServiceBinder = new ServiceBinder();
 
+    List<String> uploads;
     List<UploadDTO> oldUploadDTOs;
     List<UploadDTO> newUploadDTOs;
     ProfileDTO userProfile;
     FirebaseAuth firebaseAuth;
     DatabaseReference firebaseDatabase;
 
-    List<String> uploads;
-
+    TimerTask serviceTimerTask;
     Timer serviceTimer;
     int interval = 1; // minutes waiting between datachecks
-    int timerInterval = 60 * 1000 * interval;
+    int timerInterval = 10 * 1000 * interval;
 
     NotificationManager commentManager;
     boolean commentManagerActive = false;
@@ -50,6 +54,7 @@ public class BackgroundNotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d("NotificationService", "Service Created");
 
         uploads = new ArrayList<String>();
         newUploadDTOs = new ArrayList<UploadDTO>();
@@ -60,25 +65,39 @@ public class BackgroundNotificationService extends Service {
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Setup the timer to check for new comments
+        final Handler handler = new Handler();
         serviceTimer = new Timer();
-        serviceTimer.schedule(new TimerTask() {
+        serviceTimerTask = new TimerTask() {
             @Override
             public void run() {
-                Log.d("NotificationService", "Started Notification Timer");
-                new CheckForNewData().execute();
+
+                handler.post(new Runnable() {
+
+                    public void run() {
+
+                        try {
+                            CheckForNewData performBackgroundTask = new CheckForNewData();
+                            // PerformBackgroundTask this class is the class that extends AsynchTask
+                            performBackgroundTask.execute();
+                        }
+                        catch (Exception e) {
+                            // TODO Auto-generated catch block
+                        }
+                    }
+                });
             }
-        }, timerInterval);
+        };
+        serviceTimer.schedule(serviceTimerTask, 0, timerInterval); //execute in every 50000 ms
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         // Return the communication channel to the service.
         Log.d("NotificationService", "Binding");
-        return iNotificationBinder;
+        return iServiceBinder;
     }
 
-
-    public class NotificationBinder extends Binder {
+    public class ServiceBinder extends Binder {
         BackgroundNotificationService getService() {
             // Returns the instance of service so clients can call it's public methods
             Log.d("NotificationService ", "getService: return Service");
@@ -88,28 +107,28 @@ public class BackgroundNotificationService extends Service {
 
     // Check for new comments
     private class CheckForNewData extends AsyncTask<Void, Void, Void> {
+
         @Override
         protected Void doInBackground(Void... params) {
-            Log.d("NotificationService", "CheckForNewData executed");
+            Log.d("NotificationService", "CheckForNewData executing");
+            if (firebaseAuth.getCurrentUser() != null) {
+                firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".", ",");
 
-            firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    String userEmail = firebaseAuth.getCurrentUser().getEmail().replace(".", ",");
-                    userProfile = dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).getValue(ProfileDTO.class);
-                    Log.d("NotificationService", userProfile.getName() + " : " + userProfile.getEmail());
+                        userProfile = dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).getValue(ProfileDTO.class);
 
-                    uploads = userProfile.getUploads();
-                }
+                        uploads = userProfile.getUploads();
+                    }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
+                    }
+                });
 
-            if (uploads != null) {
-
+                if (uploads != null && uploads.size() > 0) {
 
                     firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -119,8 +138,7 @@ public class BackgroundNotificationService extends Service {
                                 String uploadName = uploads.get(i);
                                 newUploadDTOs.add(dataSnapshot.child(FireBaseSubmissions_KEY).child(uploadName).getValue(UploadDTO.class));
                             }
-
-                            }
+                        }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
@@ -128,29 +146,71 @@ public class BackgroundNotificationService extends Service {
                         }
                     });
 
+                    List<String> uploadNames = new ArrayList<String>();
 
-                    // TODO Iterate through uploads and check if there is a new comment
+                    if (oldUploadDTOs != null && newUploadDTOs != null) {
 
-                    int newComments = 2; //TODO remove when tested
+                        for (int i = 0; i < newUploadDTOs.size(); i++) {
 
-                    if (newComments > 0) {
+                            if (oldUploadDTOs.size() > i) {
 
+                                if (newUploadDTOs.get(i).getComments().size() > oldUploadDTOs.get(i).getComments().size()) {
+
+                                    uploadNames.add(newUploadDTOs.get(i).getName());
+                                }
+                            }
+                        }
                     }
-                }
-            // TODO new to old
-            return null;
-        }
 
+                    if (uploadNames.size() > 0) {
+                        StartNotification(uploadNames);
+                    }
+
+                    oldUploadDTOs = newUploadDTOs;
+                }
+
+                Log.d("NotificationService", "CheckForNewData executed");
+                return null;
+            }
+            else{
+
+                Log.d("NotificationService", "User not logged in");
+                return null;
+            }
+        }
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
         }
-
     }
 
+    public void StartNotification(List<String> uploadNames){
+        Log.d("NotificationService", "StartNotification executing");
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this)
+                .setContentTitle("Power Progress")
+                .setContentText(uploadNames + " got new comments")
+                .setTicker("You have new comments")
+                .setSmallIcon(R.drawable.commentnotification);
 
-    public void StartNotification(){
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+        Intent mainMenuIntent = new Intent(this, BrowsingActivity.class);
 
+        TaskStackBuilder tStackBuilder = TaskStackBuilder.create(this);
+        tStackBuilder.addParentStack(BrowsingActivity.class);
+        tStackBuilder.addNextIntent(mainMenuIntent);
+
+        PendingIntent pendingIntent = tStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        notificationBuilder.setContentIntent(pendingIntent);
+
+        commentManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        commentManager.notify(commentManagerID, notificationBuilder.build());
+        commentManagerActive = true;
+    }
+
+    public void StopNotification(){
+        if (commentManagerActive){
+
+            commentManager.cancel(commentManagerID);
+        }
     }
 }
