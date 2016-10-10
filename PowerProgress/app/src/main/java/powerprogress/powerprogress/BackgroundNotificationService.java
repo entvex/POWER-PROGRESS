@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Handler;
@@ -27,6 +28,8 @@ import java.util.TimerTask;
 
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseSubmissions_KEY;
+import static powerprogress.powerprogress.MagicStringsAreEvil.notificationTimer;
+import static powerprogress.powerprogress.MagicStringsAreEvil.notificationTimerInterval;
 
 public class BackgroundNotificationService extends Service {
 
@@ -41,8 +44,8 @@ public class BackgroundNotificationService extends Service {
 
     TimerTask serviceTimerTask;
     Timer serviceTimer;
-    int interval = 1; // minutes waiting between datachecks
-    int timerInterval = 10 * 1000 * interval;
+    int interval = 1; // minutes waiting between datachecks on start
+    int timerInterval;
 
     NotificationManager commentManager;
     boolean commentManagerActive = false;
@@ -64,30 +67,9 @@ public class BackgroundNotificationService extends Service {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
-        // Setup the timer to check for new comments
-        final Handler handler = new Handler();
-        serviceTimer = new Timer();
-        serviceTimerTask = new TimerTask() {
-            @Override
-            public void run() {
-
-                handler.post(new Runnable() {
-
-                    public void run() {
-
-                        try {
-                            CheckForNewData performBackgroundTask = new CheckForNewData();
-                            // PerformBackgroundTask this class is the class that extends AsynchTask
-                            performBackgroundTask.execute();
-                        }
-                        catch (Exception e) {
-                            // TODO Auto-generated catch block
-                        }
-                    }
-                });
-            }
-        };
-        serviceTimer.schedule(serviceTimerTask, 0, timerInterval); //execute in every 50000 ms
+        SharedPreferences settings = getSharedPreferences(notificationTimer, MODE_PRIVATE);
+        timerInterval = settings.getInt(notificationTimer, 60 * 1000 * interval);
+        StartTimer(timerInterval);
     }
 
     @Override
@@ -105,8 +87,38 @@ public class BackgroundNotificationService extends Service {
         }
     }
 
-    // Check for new comments
+    private void StartTimer(int intervalUpdate) {
+        if(serviceTimer != null){
+            serviceTimer.cancel();
+        }
+        // Setup the timer to check for new comments
+        final Handler handler = new Handler();
+        serviceTimer = new Timer();
+        serviceTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                handler.post(new Runnable() {
+
+                    public void run() {
+
+                        try {
+                            CheckForNewData performBackgroundTask = new CheckForNewData();
+                            performBackgroundTask.execute();
+                        }
+                        catch (Exception e) {
+
+                        }
+                    }
+                });
+            }
+        };
+        serviceTimer.schedule(serviceTimerTask, 0, intervalUpdate); //execute in every 50000 ms
+
+    }
+
     private class CheckForNewData extends AsyncTask<Void, Void, Void> {
+        // Check for new comments
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -181,6 +193,13 @@ public class BackgroundNotificationService extends Service {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
+            SharedPreferences settings = getSharedPreferences(notificationTimer, MODE_PRIVATE);
+
+            if (settings.getInt(notificationTimer, 60 * 1000 * interval) != timerInterval) {
+                timerInterval = settings.getInt(notificationTimerInterval, 60 * 1000 * interval);
+                StartTimer(timerInterval);
+            }
         }
     }
 
@@ -207,6 +226,7 @@ public class BackgroundNotificationService extends Service {
         commentManagerActive = true;
     }
 
+    // Not in use
     public void StopNotification(){
         if (commentManagerActive){
 
