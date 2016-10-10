@@ -1,6 +1,7 @@
 package powerprogress.powerprogress;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -29,7 +30,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
@@ -44,7 +47,7 @@ import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseStorage_UR
 public class ViewDataActivity extends AppCompatActivity {
 
     static final int ADD_COMMENT_REQUEST = 999;
-    Boolean videoPlaying;
+
     TextView description;
     TextView titel;
     VideoView videoView;
@@ -56,6 +59,7 @@ public class ViewDataActivity extends AppCompatActivity {
     FirebaseStorage firebaseStorage;
 
     FloatingActionButton FABbutton;
+
     FloatingActionButton FABbuttonOptionAdd;
     FloatingActionButton FABbuttonOptionRead;
 
@@ -70,12 +74,14 @@ public class ViewDataActivity extends AppCompatActivity {
         FABbutton = (FloatingActionButton) findViewById(R.id.fab_option_ViewDataActivity);
         FABbuttonOptionAdd = (FloatingActionButton) findViewById(R.id.fab_addComment_ViewDataActivity);
         FABbuttonOptionRead = (FloatingActionButton) findViewById(R.id.fab_seeComment_ViewDataActivity);
+
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance();
         Intent intent = getIntent();
         videoKey = intent.getStringExtra("Submission");
-        videoPlaying = false;
+
 
 
 
@@ -103,7 +109,7 @@ public class ViewDataActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        // Handle any errors
+
                     }
                 });
 
@@ -118,6 +124,8 @@ public class ViewDataActivity extends AppCompatActivity {
 
             }
         });
+
+
 
 
         FABbutton.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +145,8 @@ public class ViewDataActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 
         FABbuttonOptionAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,22 +176,27 @@ public class ViewDataActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
 
-                //getDatafrom resultIntent
 
-                //HoeBoeDataInsertPrettyAsFuckYeah
+
+
                 CommentDTO commentDTO = new CommentDTO();
-                commentDTO.setAuthor("Kasper Torp");
-                commentDTO.setVotes(666);
-                commentDTO.setComment("nfidjfosdjfsdjfejoiwefjiowefjweofjwioefjewo");
+                commentDTO.setAuthor(firebaseAuth.getCurrentUser().getDisplayName());
+                commentDTO.setVotes(0);
+                commentDTO.setTimestamp(new SimpleDateFormat("dd-MM-yy HH:mm").format(Calendar.getInstance().getTime()));
+                commentDTO.setComment(resultIntent.getStringExtra("comment"));
 
-                List<CommentDTO> commentDTOs = new ArrayList<>();
+                List<CommentDTO> commentDTOs = submission.getComments();
+                if (commentDTOs == null) {
+                    commentDTOs = new ArrayList<>();
+                }
                 commentDTOs.add(commentDTO);
 
                 submission.setComments(commentDTOs);
 
+                firebaseDatabase.child(FireBaseSubmissions_KEY).child(submission.getName()).setValue(submission);
 
 
-
+                Toast.makeText(this,"Your comment was submitted!",Toast.LENGTH_LONG).show();
                 Log.d("Intent result","got result OK from Intent ADD_COMMENT");
             }
         }

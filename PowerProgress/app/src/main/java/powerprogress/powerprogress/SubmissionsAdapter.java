@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 /**
@@ -62,7 +60,7 @@ public class SubmissionsAdapter extends BaseAdapter {
             TextView ttv_videoTitle_videoListItem = (TextView) convertView.findViewById(R.id.ttv_videoTitle_videoListItem);
             ttv_videoTitle_videoListItem.setText(uploadDTO.getTitel());
 
-            TextView ttv_description_videoListItem = (TextView) convertView.findViewById(R.id.ttv_description_videoListItem);
+            TextView ttv_description_videoListItem = (TextView) convertView.findViewById(R.id.ttv_comment_commentListItem);
             ttv_description_videoListItem.setText(uploadDTO.getDescription());
         }
         return convertView;

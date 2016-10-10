@@ -1,5 +1,6 @@
 package powerprogress.powerprogress;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -10,6 +11,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseSubmissions_KEY;
 import static powerprogress.powerprogress.ProfileActivity.userProfileDTO;
@@ -24,6 +27,8 @@ public class ReadCommentActivity extends AppCompatActivity {
     ListView ltv_listOfComments_CommentActivity;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +37,8 @@ public class ReadCommentActivity extends AppCompatActivity {
         //Firebase services
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
+
+
 
         //Find UI
         ltv_listOfComments_CommentActivity = (ListView) findViewById(R.id.ltv_listOfComments_CommentActivity);
@@ -42,11 +49,14 @@ public class ReadCommentActivity extends AppCompatActivity {
         firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                Intent intent = getIntent();
+                String submissionIntentName = intent.getStringExtra("Submission");
                 //TODO GET COMMENTS FROM FIREBASE and put them into the commentAdapters contructor.
 
-                //commentAdapter commentAdapter = new SubmissionsAdapter(getApplicationContext(),uploadDTOs);
-                //ltv_listOfComments_CommentActivity.setAdapter(commentAdapter);
+                UploadDTO submission  = dataSnapshot.child(FireBaseSubmissions_KEY).child(submissionIntentName).getValue(UploadDTO.class);
+                List<CommentDTO> commentDTOs = submission.getComments();
+                commentAdapter commentAdapter = new commentAdapter(getApplicationContext(),commentDTOs);
+                ltv_listOfComments_CommentActivity.setAdapter(commentAdapter);
 
             }
 

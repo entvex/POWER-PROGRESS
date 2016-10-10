@@ -9,7 +9,7 @@
     android:background="@color/PPDark">
 
     <ListView
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:id="@+id/ltv_listOfComments_CommentActivity"
         android:layout_height="0dp"
         tools:layout_constraintTop_creator="1"

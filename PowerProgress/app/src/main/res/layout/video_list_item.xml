@@ -14,7 +14,7 @@
         android:id="@+id/ttv_videoTitle_videoListItem"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/ttv_description_videoListItem"
+        app:layout_constraintBottom_toTopOf="@+id/ttv_comment_commentListItem"
         android:layout_marginTop="4dp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="16dp"
@@ -27,7 +27,7 @@
         android:layout_height="25dp"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         android:text="Large Text"
-        android:id="@+id/ttv_description_videoListItem"
+        android:id="@+id/ttv_comment_commentListItem"
         tools:layout_constraintTop_creator="1"
         android:layout_marginTop="29dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,7 +41,7 @@
         android:background="@color/PPText"
         tools:layout_editor_absoluteX="0dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ttv_description_videoListItem" />
+        app:layout_constraintTop_toBottomOf="@+id/ttv_comment_commentListItem" />
 
 
 </android.support.constraint.ConstraintLayout>
