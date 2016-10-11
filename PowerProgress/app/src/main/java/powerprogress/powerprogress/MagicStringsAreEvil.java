@@ -24,10 +24,4 @@ public class MagicStringsAreEvil {
     public static String ProfileName_KEY = "ProfileName";
     public static String ProfileAge_KEY = "ProfileAge";
     public static String ProfileEmail_KEY = "ProfileEmail";
-
-
-    //Shared Preferences
-    public static String notificationTimer = "COMMENT_NOTIFICATION_INTERVAL";
-    public static String notificationTimerInterval = "COMMENT_TIMER_INTERVAL";
-
 }

@@ -28,8 +28,6 @@ import java.util.TimerTask;
 
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseSubmissions_KEY;
-import static powerprogress.powerprogress.MagicStringsAreEvil.notificationTimer;
-import static powerprogress.powerprogress.MagicStringsAreEvil.notificationTimerInterval;
 
 public class BackgroundNotificationService extends Service {
 
@@ -44,8 +42,8 @@ public class BackgroundNotificationService extends Service {
 
     TimerTask serviceTimerTask;
     Timer serviceTimer;
-    int interval = 1; // minutes waiting between datachecks on start
-    int timerInterval;
+    int interval = 1; // minutes waiting between datachecks
+    int timerInterval = 60 * 1000 * interval;
 
     NotificationManager commentManager;
     boolean commentManagerActive = false;
@@ -67,8 +65,6 @@ public class BackgroundNotificationService extends Service {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
-        SharedPreferences settings = getSharedPreferences(notificationTimer, MODE_PRIVATE);
-        timerInterval = settings.getInt(notificationTimerInterval, 60 * 1000 * interval);
         StartTimer(timerInterval);
     }
 
@@ -183,13 +179,6 @@ public class BackgroundNotificationService extends Service {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-            SharedPreferences settings = getSharedPreferences(notificationTimer, MODE_PRIVATE);
-
-            if (settings.getInt(notificationTimerInterval, 60 * 1000 * interval) != timerInterval) {
-                timerInterval = settings.getInt(notificationTimerInterval, 60 * 1000 * interval);
-                StartTimer(timerInterval);
-            }
         }
     }
 
