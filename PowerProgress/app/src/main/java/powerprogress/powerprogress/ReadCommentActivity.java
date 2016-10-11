@@ -55,8 +55,10 @@ public class ReadCommentActivity extends AppCompatActivity {
 
                 UploadDTO submission  = dataSnapshot.child(FireBaseSubmissions_KEY).child(submissionIntentName).getValue(UploadDTO.class);
                 List<CommentDTO> commentDTOs = submission.getComments();
-                commentAdapter commentAdapter = new commentAdapter(getApplicationContext(),commentDTOs);
-                ltv_listOfComments_CommentActivity.setAdapter(commentAdapter);
+                if(commentDTOs != null) {
+                    commentAdapter commentAdapter = new commentAdapter(getApplicationContext(), commentDTOs);
+                    ltv_listOfComments_CommentActivity.setAdapter(commentAdapter);
+                }
 
             }
 

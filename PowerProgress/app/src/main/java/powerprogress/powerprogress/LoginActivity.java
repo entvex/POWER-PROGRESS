@@ -22,8 +22,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
 
@@ -98,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                 createProfile(account);
 
-                Toast.makeText(this,"Succesfully logged in as "+account.getDisplayName(),Toast.LENGTH_SHORT);
+                Toast.makeText(this,"Succesfully logged in as "+account.getDisplayName(),Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
                 finish();
             } else {
@@ -144,15 +147,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 
-    private void createProfile(GoogleSignInAccount account)
+    private void createProfile(final GoogleSignInAccount account)
     {
         //Save the profile in firebase
-        ProfileDTO userProfileDTO = new ProfileDTO();
-
-        userProfileDTO.setName(account.getDisplayName());
-        userProfileDTO.setEmail(account.getEmail());
-
-        firebaseDatabase.child(FireBaseProfile_KEY).child(account.getEmail().replace(".",",")).setValue(userProfileDTO);
+        firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.child(FireBaseProfile_KEY).child(account.getEmail().replace(".",",")).exists())
+                {
+                    ProfileDTO userProfileDTO = new ProfileDTO();
+                    userProfileDTO.setName(account.getDisplayName());
+                    userProfileDTO.setEmail(account.getEmail());
+                    firebaseDatabase.child(FireBaseProfile_KEY).child(account.getEmail().replace(".",",")).setValue(userProfileDTO);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "Database Error", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }

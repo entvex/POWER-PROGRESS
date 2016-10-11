@@ -132,6 +132,37 @@ public class BackgroundNotificationService extends Service {
                         userProfile = dataSnapshot.child(FireBaseProfile_KEY).child(userEmail).getValue(ProfileDTO.class);
 
                         uploads = userProfile.getUploads();
+
+                        if (uploads != null && uploads.size() > 0) {
+                            newUploadDTOs = new ArrayList<UploadDTO>();
+                            for (int i = 0; i < uploads.size(); i++) {
+
+                                String uploadName = uploads.get(i);
+                                newUploadDTOs.add(dataSnapshot.child(FireBaseSubmissions_KEY).child(uploadName).getValue(UploadDTO.class));
+                            }
+
+                            List<String> uploadNames = new ArrayList<String>();
+
+                            if (!oldUploadDTOs.isEmpty() && !newUploadDTOs.isEmpty()) {
+
+                                for (int i = 0; i < newUploadDTOs.size(); i++) {
+
+                                    if (oldUploadDTOs.size() > i) {
+
+                                        if (newUploadDTOs.get(i).getComments().size() > oldUploadDTOs.get(i).getComments().size()) {
+
+                                            uploadNames.add(newUploadDTOs.get(i).getTitel());
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (uploadNames.size() > 0) {
+                                StartNotification(uploadNames);
+                            }
+
+                            oldUploadDTOs = newUploadDTOs;
+                        }
                     }
 
                     @Override
@@ -139,47 +170,6 @@ public class BackgroundNotificationService extends Service {
 
                     }
                 });
-
-                if (uploads != null && uploads.size() > 0) {
-
-                    firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (int i = 0; i < uploads.size(); i++) {
-
-                                String uploadName = uploads.get(i);
-                                newUploadDTOs.add(dataSnapshot.child(FireBaseSubmissions_KEY).child(uploadName).getValue(UploadDTO.class));
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    List<String> uploadNames = new ArrayList<String>();
-
-                    if (oldUploadDTOs != null && newUploadDTOs != null) {
-
-                        for (int i = 0; i < newUploadDTOs.size(); i++) {
-
-                            if (oldUploadDTOs.size() > i) {
-
-                                if (newUploadDTOs.get(i).getComments().size() > oldUploadDTOs.get(i).getComments().size()) {
-
-                                    uploadNames.add(newUploadDTOs.get(i).getName());
-                                }
-                            }
-                        }
-                    }
-
-                    if (uploadNames.size() > 0) {
-                        StartNotification(uploadNames);
-                    }
-
-                    oldUploadDTOs = newUploadDTOs;
-                }
 
                 Log.d("NotificationService", "CheckForNewData executed");
                 return null;

@@ -78,11 +78,13 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         app:fabSize="mini"
-        app:srcCompat="@drawable/timerbutton"
+        app:srcCompat="@drawable/writecommenticon"
         android:id="@+id/fab_addComment_ViewDataActivity"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/fab_option_ViewDataActivity"
+        app:layout_constraintRight_toLeftOf="@+id/fab_option_ViewDataActivity"
+        app:layout_constraintTop_toTopOf="@+id/fab_option_ViewDataActivity"
+        android:layout_marginRight="8dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
@@ -92,7 +94,9 @@
         app:srcCompat="@drawable/browsebutton"
         android:id="@+id/fab_seeComment_ViewDataActivity"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/fab_option_ViewDataActivity"
+        app:layout_constraintRight_toRightOf="@+id/fab_option_ViewDataActivity"
+        app:layout_constraintLeft_toLeftOf="@+id/fab_option_ViewDataActivity"
+        android:layout_marginBottom="8dp" />
 
 </android.support.constraint.ConstraintLayout>
