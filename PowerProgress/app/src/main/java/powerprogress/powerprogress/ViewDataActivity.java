@@ -75,15 +75,11 @@ public class ViewDataActivity extends AppCompatActivity {
         FABbuttonOptionAdd = (FloatingActionButton) findViewById(R.id.fab_addComment_ViewDataActivity);
         FABbuttonOptionRead = (FloatingActionButton) findViewById(R.id.fab_seeComment_ViewDataActivity);
 
-
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance();
         Intent intent = getIntent();
         videoKey = intent.getStringExtra("Submission");
-
-
-
 
         firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -112,12 +108,7 @@ public class ViewDataActivity extends AppCompatActivity {
 
                     }
                 });
-
-
-
             }
-
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -167,9 +158,8 @@ public class ViewDataActivity extends AppCompatActivity {
                 startActivity(ReadIntent);
             }
         });
-
-
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {
 
         if (requestCode == ADD_COMMENT_REQUEST) {
