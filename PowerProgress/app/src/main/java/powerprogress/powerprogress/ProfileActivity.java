@@ -1,5 +1,6 @@
 package powerprogress.powerprogress;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -52,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
     CheckBox ckb_BenchPress_profileActivity;
     CheckBox ckb_overheadpress_profileActivity;
     CheckBox ckb_Squat_profileActivity;
+    CheckBox ckb_notifications_profileActivity;
 
     //UserProfile
     static ProfileDTO userProfileDTO;
@@ -79,6 +81,10 @@ public class ProfileActivity extends AppCompatActivity {
         ckb_overheadpress_profileActivity = (CheckBox) findViewById(R.id.ckb_overheadpress_profileActivity);
         ckb_Squat_profileActivity = (CheckBox) findViewById(R.id.ckb_Squat_profileActivity);
 
+        ckb_notifications_profileActivity = (CheckBox) findViewById(R.id.ckb_notifications_profileActivity);
+
+        //Notifications
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences_Notifications",MODE_PRIVATE);
 
         //Only download data once
         if (downloadedDataOnce == false)

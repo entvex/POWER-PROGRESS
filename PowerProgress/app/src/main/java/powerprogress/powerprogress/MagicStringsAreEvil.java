@@ -24,4 +24,8 @@ public class MagicStringsAreEvil {
     public static String ProfileName_KEY = "ProfileName";
     public static String ProfileAge_KEY = "ProfileAge";
     public static String ProfileEmail_KEY = "ProfileEmail";
+
+
+    //Notifications
+    public static String sharedPreferences_Notifications = "sharedPreferences_Notifications";
 }
