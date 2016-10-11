@@ -51,7 +51,7 @@ public class ReadCommentActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Intent intent = getIntent();
                 String submissionIntentName = intent.getStringExtra("Submission");
-                //TODO GET COMMENTS FROM FIREBASE and put them into the commentAdapters contructor.
+
 
                 UploadDTO submission  = dataSnapshot.child(FireBaseSubmissions_KEY).child(submissionIntentName).getValue(UploadDTO.class);
                 List<CommentDTO> commentDTOs = submission.getComments();

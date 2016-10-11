@@ -236,7 +236,7 @@ public class UploadDataActivity extends AppCompatActivity {
         StorageReference videoUpload = storageReference.child(firebaseAuth.getCurrentUser().getEmail() + "-"+ nextUploadNumber);
         UploadTask uploadTask = videoUpload.putFile(currentVideo);
 
-        Toast.makeText(this, "Submitting... We'll be done in a jiffy!", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.submit_waitMsg+"", Toast.LENGTH_LONG).show();
 
         getVideoBtn.setVisibility(View.GONE);
         submitDataBtn.setVisibility(View.GONE);

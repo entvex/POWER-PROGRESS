@@ -19,7 +19,7 @@
         android:id="@+id/vvw_displayVideo_UploadDataActivity" />
 
     <Button
-        android:text="Submit"
+        android:text="@string/uploadActivity_Submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_submit_UploadDataActivity"
@@ -40,7 +40,7 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="Replay"
+        android:text="@string/uploadActivity_Replay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_replayVideo_UploadDataActivity"
@@ -51,7 +51,7 @@
         android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
     <Button
-        android:text="Record"
+        android:text="@string/uploadActivity_Record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_getVideo_UploadDataActivity"
@@ -117,7 +117,7 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/edt_title_UploadDataActivity"
-        android:hint="Type Titel here"
+        android:hint="@string/uploadActivity_TitelHint"
         android:textSize="14sp"
         android:textColorLink="?attr/colorBackgroundFloating"
         android:textColor="@android:color/white"
@@ -133,7 +133,7 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/edt_comment_UploadDataActivity"
-        android:hint="Type your question here"
+        android:hint="@string/uploadActivity_CommentHint"
         android:textSize="14sp"
         android:textColorLink="?attr/colorBackgroundFloating"
         android:textColor="@android:color/white"

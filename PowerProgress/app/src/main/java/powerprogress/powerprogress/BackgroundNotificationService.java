@@ -186,10 +186,10 @@ public class BackgroundNotificationService extends Service {
         Log.d("NotificationService", "StartNotification executing");
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this)
-                .setContentTitle("Power Progress")
-                .setContentText(uploadNames + " got new comments")
-                .setTicker("You have new comments")
-                .setSmallIcon(R.drawable.commentnotification)
+                .setContentTitle(R.string.app_name + "")
+                .setContentText(uploadNames + "" + R.string.Notification_text)
+                .setTicker(R.string.Notification_newComment+"")
+                .setSmallIcon(R.drawable.ppicon)
                 .setAutoCancel(true)
                 .setVibrate(new long[] {500, 500 });
 

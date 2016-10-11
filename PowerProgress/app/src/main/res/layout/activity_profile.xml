@@ -38,7 +38,7 @@
 
     <TextView
         android:textColor="@color/PPText"
-        android:text="Name"
+        android:text="@string/profileActivity_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_Lable_name_profileActivity"
@@ -51,7 +51,7 @@
 
     <TextView
         android:textColor="@color/PPText"
-        android:text="Email"
+        android:text="@string/profileActivity_Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_Lable_email_profileActivity"
@@ -64,7 +64,7 @@
 
     <TextView
         android:textColor="@color/PPText"
-        android:text="Age"
+        android:text="@string/profileActivity_Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_lable_age_profileActivity"
@@ -119,7 +119,7 @@
         tools:layout_constraintLeft_creator="1" />
 
     <Button
-        android:text="@android:string/ok"
+        android:text="@string/profileActivity_Submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_ok_profileActivity"
@@ -135,7 +135,7 @@
 
     <CheckBox
         android:textColor="@color/PPText"
-        android:text="DeadLift"
+        android:text="@string/option_deadlift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ckb_deadlift_profileActivity"
@@ -147,7 +147,7 @@
 
     <TextView
         android:textColor="@color/PPOrange"
-        android:text="Qualifications"
+        android:text="@string/profileActivity_Qualification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_qualifications_profileActivity"
@@ -163,7 +163,7 @@
 
     <TextView
         android:textColor="@color/PPOrange"
-        android:text="Notifications"
+        android:text="@string/profileActivity_Notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_notifications_profileActivity"
@@ -177,7 +177,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ttv_qualifications_profileActivity" />
 
     <CheckBox
-        android:text="Squat"
+        android:text="@string/option_squat"
         android:textColor="@color/PPText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
 
     <CheckBox
         android:textColor="@color/PPText"
-        android:text="BenchPress"
+        android:text="@string/option_bench"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ckb_BenchPress_profileActivity"
@@ -202,7 +202,7 @@
 
     <CheckBox
         android:textColor="@color/PPText"
-        android:text="Overhead Press"
+        android:text="@string/option_overheadpress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ckb_overheadpress_profileActivity"

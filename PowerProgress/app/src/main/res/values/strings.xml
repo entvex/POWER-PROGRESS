@@ -1,11 +1,38 @@
 <resources>
     <string name="app_name">PowerProgress</string>
-    <string name="staticlogin_LoginActivity">Please Login using your Google+</string>
-    <string name="profileWaitWhileLoadingOrHaveNoEmptyFields">Fill out empty fields or wait for data to load</string>
+
 
     <string name="option_squat">Squat</string>
 
     <string name="option_bench">Bench Press</string>
     <string name="option_overheadpress">Overhead Press</string>
     <string name="option_deadlift">Deadlift</string>
+
+    <string name="warning_10char">Please Type more than 10 characters</string>
+
+    <string name="AddCommentActivity_StaticTitel">Enter your comment below:</string>
+    <string name="AddCommentActivity_StaticHint">your comment </string>
+    <string name="AddCommentActivity_StaticSubmit">Submit</string>
+    <string name="staticlogin_LoginActivity">Please Login using your Google+</string>
+    <string name="profileWaitWhileLoadingOrHaveNoEmptyFields">Fill out empty fields or wait for data to load</string>
+    <string name="profileActivity_Name">Name</string>
+    <string name="profileActivity_Email">Email</string>
+    <string name="profileActivity_Age">Age</string>
+    <string name="profileActivity_Qualification">Qualificatio</string>
+    <string name="profileActivity_Notification">Notifications</string>
+    <string name="profileActivity_Submit">OK</string>
+
+    <string name="uploadActivity_Submit">Submit</string>
+    <string name="uploadActivity_Replay">Replay</string>
+    <string name="uploadActivity_Record">Record</string>
+    <string name="uploadActivity_TitelHint">Type Titel here</string>
+    <string name="uploadActivity_CommentHint">Type your question here</string>
+
+    <string name="Notification_text"> got new comments</string>
+    <string name="Notification_newComment">you have new comments</string>
+
+    <string name="login_hintSucess">Sucessfully logged in as </string>
+    <string name="comment_hintSucess">Your comment was submitted!</string>
+    <string name="submit_waitMsg">Submitting... We will be done in a jiffy!</string>
+
 </resources>
