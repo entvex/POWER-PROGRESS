@@ -35,6 +35,7 @@ import static powerprogress.powerprogress.MagicStringsAreEvil.option_BenchPress;
 import static powerprogress.powerprogress.MagicStringsAreEvil.option_Deadlift;
 import static powerprogress.powerprogress.MagicStringsAreEvil.option_OverheadPress;
 import static powerprogress.powerprogress.MagicStringsAreEvil.option_Squat;
+import static powerprogress.powerprogress.MagicStringsAreEvil.sharedPreferences_Notifications;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -57,6 +58,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     //UserProfile
     static ProfileDTO userProfileDTO;
+
+    //SharedPreferences
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +88,8 @@ public class ProfileActivity extends AppCompatActivity {
         ckb_notifications_profileActivity = (CheckBox) findViewById(R.id.ckb_notifications_profileActivity);
 
         //Notifications
-        SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences_Notifications",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(sharedPreferences_Notifications,MODE_PRIVATE);
+        ckb_notifications_profileActivity.setChecked(sharedPreferences.getBoolean(sharedPreferences_Notifications,true));
 
         //Only download data once
         if (downloadedDataOnce == false)
@@ -125,6 +130,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     //Save To firebase
                     firebaseDatabase.child(FireBaseProfile_KEY).child(firebaseAuth.getCurrentUser().getEmail().replace(".", ",")).setValue(userProfileDTO);
+                    sharedPreferences.edit().putBoolean(sharedPreferences_Notifications,ckb_notifications_profileActivity.isChecked()).commit();
                     downloadedDataOnce = false;
                     finish();
                 } else {
@@ -148,6 +154,8 @@ public class ProfileActivity extends AppCompatActivity {
         savedInstanceState.putBoolean(option_OverheadPress,ckb_overheadpress_profileActivity.isChecked());
         savedInstanceState.putBoolean(option_Squat,ckb_Squat_profileActivity.isChecked());
 
+        savedInstanceState.putBoolean(sharedPreferences_Notifications,ckb_notifications_profileActivity.isChecked());
+
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -165,6 +173,8 @@ public class ProfileActivity extends AppCompatActivity {
         ckb_BenchPress_profileActivity.setChecked(savedInstanceState.getBoolean(option_BenchPress));
         ckb_overheadpress_profileActivity.setChecked(savedInstanceState.getBoolean(option_OverheadPress));
         ckb_Squat_profileActivity.setChecked(savedInstanceState.getBoolean(option_Squat));
+
+        ckb_notifications_profileActivity.setChecked(savedInstanceState.getBoolean(sharedPreferences_Notifications));
     }
 
     @NonNull
