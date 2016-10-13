@@ -8,33 +8,17 @@
     android:background="@color/PPDark"
     tools:context="powerprogress.powerprogress.ProfileActivity">
 
-    <TextView
-        android:textColor="@color/PPText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        app:layout_constraintRight_toLeftOf="parent"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:background="@color/common_google_signin_btn_text_dark_default"
         app:srcCompat="@mipmap/ic_launcher"
         android:id="@+id/imv_profilePhoto_ProfileActivity"
-        android:layout_height="100dp"
         tools:layout_constraintTop_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/ttv_Lable_name_profileActivity"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="8dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1" />
+        android:layout_marginTop="32dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:textColor="@color/PPText"
@@ -42,12 +26,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_Lable_name_profileActivity"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="133dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="20sp"
+        android:textStyle="normal|bold"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/imv_profilePhoto_ProfileActivity"
+        app:layout_constraintTop_toTopOf="@+id/imv_profilePhoto_ProfileActivity"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:textColor="@color/PPText"
@@ -55,12 +39,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_Lable_email_profileActivity"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="27dp"
+        android:textSize="20sp"
+        android:textStyle="normal|bold"
+        android:layout_marginTop="32dp"
         app:layout_constraintTop_toBottomOf="@+id/ttv_Lable_name_profileActivity"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@+id/ttv_Lable_name_profileActivity" />
 
     <TextView
         android:textColor="@color/PPText"
@@ -69,37 +52,31 @@
         android:layout_height="wrap_content"
         android:id="@+id/ttv_lable_age_profileActivity"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="25dp"
         android:layout_marginTop="30dp"
         app:layout_constraintTop_toBottomOf="@+id/ttv_Lable_email_profileActivity"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@+id/ttv_Lable_email_profileActivity"
+        android:textSize="20sp"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:textColor="@color/PPText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_name_profileActivity"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/imv_profilePhoto_ProfileActivity"
-        tools:layout_constraintLeft_creator="1" />
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/ttv_Lable_name_profileActivity"
+        app:layout_constraintTop_toTopOf="@+id/ttv_Lable_name_profileActivity" />
 
     <TextView
         android:textColor="@color/PPText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ttv_email_profileActivity"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginTop="19dp"
-        app:layout_constraintTop_toBottomOf="@+id/ttv_name_profileActivity"
-        tools:layout_constraintLeft_creator="1" />
+        app:layout_constraintTop_toTopOf="@+id/ttv_Lable_email_profileActivity"
+        app:layout_constraintBottom_toBottomOf="@+id/ttv_Lable_email_profileActivity"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="@+id/ttv_name_profileActivity" />
 
     <EditText
         android:textColorLink="?attr/colorBackgroundFloating"
@@ -110,13 +87,10 @@
         android:inputType="numberSigned"
         android:ems="10"
         android:id="@+id/ett_age_profileActivity"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/ttv_email_profileActivity"
-        tools:layout_constraintLeft_creator="1" />
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="@+id/ttv_email_profileActivity"
+        app:layout_constraintTop_toTopOf="@+id/ttv_lable_age_profileActivity"
+        app:layout_constraintBottom_toBottomOf="@+id/ttv_lable_age_profileActivity" />
 
     <Button
         android:text="@string/profileActivity_Submit"
@@ -128,10 +102,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:background="@color/PPOrange"
-        android:textColor="@color/PPText"/>
+        android:textColor="@color/PPText"
+        android:height="60dp"
+        android:width="240dp"
+        android:textSize="20sp"
+        android:textStyle="normal|bold" />
 
     <CheckBox
         android:textColor="@color/PPText"
@@ -139,11 +117,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ckb_deadlift_profileActivity"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@+id/ttv_qualifications_profileActivity"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="20sp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp" />
 
     <TextView
         android:textColor="@color/PPOrange"
@@ -153,13 +131,12 @@
         android:id="@+id/ttv_qualifications_profileActivity"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/ett_age_profileActivity"
+        app:layout_constraintTop_toBottomOf="@+id/imv_profilePhoto_ProfileActivity"
         tools:layout_constraintLeft_creator="1"
         android:textStyle="bold"
-        android:textSize="18sp" />
+        android:textSize="24sp"
+        android:layout_marginTop="64dp" />
 
     <TextView
         android:textColor="@color/PPOrange"
@@ -168,13 +145,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/ttv_notifications_profileActivity"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="160dp"
-        app:layout_constraintTop_toBottomOf="@+id/ttv_qualifications_profileActivity" />
+        android:layout_marginTop="64dp"
+        app:layout_constraintTop_toBottomOf="@+id/ckb_BenchPress_profileActivity" />
 
     <CheckBox
         android:text="@string/option_squat"
@@ -182,11 +159,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ckb_Squat_profileActivity"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ckb_deadlift_profileActivity"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/ckb_deadlift_profileActivity"
+        app:layout_constraintTop_toTopOf="@+id/ckb_deadlift_profileActivity" />
 
     <CheckBox
         android:textColor="@color/PPText"
@@ -194,11 +170,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ckb_BenchPress_profileActivity"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ckb_Squat_profileActivity"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/ckb_Squat_profileActivity"
+        app:layout_constraintTop_toTopOf="@+id/ckb_Squat_profileActivity"
+        android:layout_marginStart="16dp" />
 
     <CheckBox
         android:textColor="@color/PPText"
@@ -206,10 +181,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ckb_overheadpress_profileActivity"
-        android:layout_marginStart="8dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ckb_BenchPress_profileActivity" />
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/ckb_BenchPress_profileActivity"
+        app:layout_constraintTop_toTopOf="@+id/ckb_BenchPress_profileActivity"
+        android:layout_marginStart="16dp" />
 
     <CheckBox
         android:textColor="@color/PPText"
@@ -222,6 +197,7 @@
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/ttv_notifications_profileActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/ttv_notifications_profileActivity"
+        android:textSize="20sp" />
 
 </android.support.constraint.ConstraintLayout>

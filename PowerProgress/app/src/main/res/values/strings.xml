@@ -18,7 +18,7 @@
     <string name="profileActivity_Name">Name</string>
     <string name="profileActivity_Email">Email</string>
     <string name="profileActivity_Age">Age</string>
-    <string name="profileActivity_Qualification">Qualificatio</string>
+    <string name="profileActivity_Qualification">Qualifications</string>
     <string name="profileActivity_Notification">Notifications</string>
     <string name="profileActivity_Submit">OK</string>
 

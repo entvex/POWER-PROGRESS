@@ -28,6 +28,7 @@ import java.util.TimerTask;
 
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseProfile_KEY;
 import static powerprogress.powerprogress.MagicStringsAreEvil.FireBaseSubmissions_KEY;
+import static powerprogress.powerprogress.MagicStringsAreEvil.sharedPreferences_Notifications;
 
 public class BackgroundNotificationService extends Service {
 
@@ -49,6 +50,9 @@ public class BackgroundNotificationService extends Service {
     boolean commentManagerActive = false;
     int commentManagerID = 10;
 
+    SharedPreferences sharedPreferences;
+    boolean notificationActive;
+
     public BackgroundNotificationService() {
     }
 
@@ -56,6 +60,9 @@ public class BackgroundNotificationService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d("NotificationService", "Service Created");
+
+        sharedPreferences = getSharedPreferences(sharedPreferences_Notifications,MODE_PRIVATE);
+        notificationActive = sharedPreferences.getBoolean(sharedPreferences_Notifications,true);
 
         uploads = new ArrayList<String>();
         newUploadDTOs = new ArrayList<UploadDTO>();
@@ -182,29 +189,35 @@ public class BackgroundNotificationService extends Service {
         }
     }
 
+
     public void StartNotification(List<String> uploadNames){
-        Log.d("NotificationService", "StartNotification executing");
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this)
-                .setContentTitle(R.string.app_name + "")
-                .setContentText(uploadNames + "" + R.string.Notification_text)
-                .setTicker(R.string.Notification_newComment+"")
-                .setSmallIcon(R.drawable.ppicon)
-                .setAutoCancel(true)
-                .setVibrate(new long[] {500, 500 });
+        if(notificationActive) {
+            Log.d("NotificationService", "StartNotification executing");
+            NotificationCompat.Builder notificationBuilder =
+                    new NotificationCompat.Builder(this)
+                            .setContentTitle(R.string.app_name + "")
+                            .setContentText(uploadNames + "" + R.string.Notification_text)
+                            .setTicker(R.string.Notification_newComment + "")
+                            .setSmallIcon(R.drawable.ppicon)
+                            .setAutoCancel(true)
+                            .setVibrate(new long[]{500, 500});
 
-        Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
+            Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
 
-        TaskStackBuilder tStackBuilder = TaskStackBuilder.create(this);
-        tStackBuilder.addParentStack(MainMenuActivity.class);
-        tStackBuilder.addNextIntent(mainMenuIntent);
+            TaskStackBuilder tStackBuilder = TaskStackBuilder.create(this);
+            tStackBuilder.addParentStack(MainMenuActivity.class);
+            tStackBuilder.addNextIntent(mainMenuIntent);
 
-        PendingIntent pendingIntent = tStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        notificationBuilder.setContentIntent(pendingIntent);
+            PendingIntent pendingIntent = tStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            notificationBuilder.setContentIntent(pendingIntent);
 
-        commentManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        commentManager.notify(commentManagerID, notificationBuilder.build());
-        commentManagerActive = true;
+            commentManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            commentManager.notify(commentManagerID, notificationBuilder.build());
+            commentManagerActive = true;
+        }
+        else{
+            Log.d("NotificationService", "StartNotification disabled");
+        }
     }
 
     // Not in use
