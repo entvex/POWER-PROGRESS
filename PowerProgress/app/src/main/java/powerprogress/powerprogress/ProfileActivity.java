@@ -177,6 +177,12 @@ public class ProfileActivity extends AppCompatActivity {
         ckb_notifications_profileActivity.setChecked(savedInstanceState.getBoolean(sharedPreferences_Notifications));
     }
 
+    @Override
+    public void onBackPressed() {
+        downloadedDataOnce = false;
+        super.onBackPressed();
+    }
+
     @NonNull
     private ProfileDTO getFilledProfile() {
 
