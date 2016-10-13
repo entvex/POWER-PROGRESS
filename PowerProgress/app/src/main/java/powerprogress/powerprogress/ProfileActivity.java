@@ -119,8 +119,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         btn_ok_profileActivity.setOnClickListener(new View.OnClickListener() {
-            //TODO DONT SAVE IF NO VALUES
-
             @Override
             public void onClick(View v) {
                 //Save the profile in firebase
