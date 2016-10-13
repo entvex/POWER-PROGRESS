@@ -134,7 +134,7 @@ public class ProfileActivity extends AppCompatActivity {
                     downloadedDataOnce = false;
                     finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.profileWaitWhileLoadingOrHaveNoEmptyFields, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.profileWaitWhileLoadingOrHaveNoEmptyFields), Toast.LENGTH_LONG).show();
                 }
             }
         });

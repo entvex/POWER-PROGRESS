@@ -31,7 +31,7 @@
     <string name="Notification_text"> got new comments</string>
     <string name="Notification_newComment">you have new comments</string>
 
-    <string name="login_hintSucess">Sucessfully logged in as </string>
+    <string name="login_hintSucess">Sucessfully logged in as</string>
     <string name="comment_hintSucess">Your comment was submitted!</string>
     <string name="submit_waitMsg">Submitting... We will be done in a jiffy!</string>
 

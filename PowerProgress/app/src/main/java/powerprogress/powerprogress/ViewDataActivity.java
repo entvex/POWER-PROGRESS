@@ -105,7 +105,7 @@ public class ViewDataActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-
+                        Log.d("ViewDataActivity", "Couldn't get the video URL: " + exception);
                     }
                 });
             }
@@ -186,7 +186,7 @@ public class ViewDataActivity extends AppCompatActivity {
                 firebaseDatabase.child(FireBaseSubmissions_KEY).child(submission.getName()).setValue(submission);
 
 
-                Toast.makeText(this,R.string.comment_hintSucess+"",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.comment_hintSucess),Toast.LENGTH_LONG).show();
                 Log.d("Intent result","got result OK from Intent ADD_COMMENT");
             }
         }

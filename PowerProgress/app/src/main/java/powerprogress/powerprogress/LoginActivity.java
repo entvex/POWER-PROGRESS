@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                 createProfile(account);
 
-                Toast.makeText(this,R.string.login_hintSucess+account.getDisplayName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,getString(R.string.login_hintSucess) + " " + account.getDisplayName(),Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
                 finish();
             } else {

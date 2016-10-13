@@ -7,7 +7,7 @@
     android:background="@color/PPDark">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Material.Menu"
         android:text="Comment"

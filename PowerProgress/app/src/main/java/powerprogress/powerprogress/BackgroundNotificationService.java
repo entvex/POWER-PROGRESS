@@ -51,7 +51,6 @@ public class BackgroundNotificationService extends Service {
     int commentManagerID = 10;
 
     SharedPreferences sharedPreferences;
-    boolean notificationActive;
 
     public BackgroundNotificationService() {
     }
@@ -61,8 +60,7 @@ public class BackgroundNotificationService extends Service {
         super.onCreate();
         Log.d("NotificationService", "Service Created");
 
-        sharedPreferences = getSharedPreferences(sharedPreferences_Notifications,MODE_PRIVATE);
-        notificationActive = sharedPreferences.getBoolean(sharedPreferences_Notifications,true);
+        sharedPreferences = getSharedPreferences(sharedPreferences_Notifications, MODE_PRIVATE);
 
         uploads = new ArrayList<String>();
         newUploadDTOs = new ArrayList<UploadDTO>();
@@ -146,15 +144,22 @@ public class BackgroundNotificationService extends Service {
 
                             List<String> uploadNames = new ArrayList<String>();
 
-                            if (!oldUploadDTOs.isEmpty() && !newUploadDTOs.isEmpty()) {
+                            if (!oldUploadDTOs.isEmpty() && !newUploadDTOs.isEmpty() && oldUploadDTOs != null && newUploadDTOs != null) {
 
                                 for (int i = 0; i < newUploadDTOs.size(); i++) {
 
                                     if (oldUploadDTOs.size() > i) {
 
-                                        if (newUploadDTOs.get(i).getComments().size() > oldUploadDTOs.get(i).getComments().size()) {
+                                        if (newUploadDTOs.get(i).getComments() != null) {
 
-                                            uploadNames.add(newUploadDTOs.get(i).getTitel());
+                                            if (oldUploadDTOs.get(i).getComments() == null)
+                                            {
+                                                oldUploadDTOs.get(i).setComments(new ArrayList<CommentDTO>());
+                                            }
+                                            if (newUploadDTOs.get(i).getComments().size() > oldUploadDTOs.get(i).getComments().size()) {
+
+                                                uploadNames.add(newUploadDTOs.get(i).getTitel());
+                                            }
                                         }
                                     }
                                 }
@@ -191,13 +196,14 @@ public class BackgroundNotificationService extends Service {
 
 
     public void StartNotification(List<String> uploadNames){
-        if(notificationActive) {
+
+        if(sharedPreferences.getBoolean(sharedPreferences_Notifications,true)) {
             Log.d("NotificationService", "StartNotification executing");
             NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(this)
-                            .setContentTitle(R.string.app_name + "")
-                            .setContentText(uploadNames + "" + R.string.Notification_text)
-                            .setTicker(R.string.Notification_newComment + "")
+                            .setContentTitle(getString(R.string.app_name))
+                            .setContentText(uploadNames + getString(R.string.Notification_text))
+                            .setTicker(getString(R.string.Notification_newComment))
                             .setSmallIcon(R.drawable.ppicon)
                             .setAutoCancel(true)
                             .setVibrate(new long[]{500, 500});

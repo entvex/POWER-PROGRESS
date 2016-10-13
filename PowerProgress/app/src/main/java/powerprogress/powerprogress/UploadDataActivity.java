@@ -127,7 +127,7 @@ public class UploadDataActivity extends AppCompatActivity {
         submitDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentVideo != null) {
+                if(currentVideo != null && editComment.getText().length() > 0 && editTitel.getText().length() > 0) {
                     UploadData();
                 }
 
@@ -236,7 +236,7 @@ public class UploadDataActivity extends AppCompatActivity {
         StorageReference videoUpload = storageReference.child(firebaseAuth.getCurrentUser().getEmail() + "-"+ nextUploadNumber);
         UploadTask uploadTask = videoUpload.putFile(currentVideo);
 
-        Toast.makeText(this, R.string.submit_waitMsg+"", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.submit_waitMsg), Toast.LENGTH_LONG).show();
 
         getVideoBtn.setVisibility(View.GONE);
         submitDataBtn.setVisibility(View.GONE);

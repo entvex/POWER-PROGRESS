@@ -33,7 +33,7 @@ public class AddCommentActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(v.getContext(),R.string.warning_10char, Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), getString(R.string.warning_10char), Toast.LENGTH_LONG).show();
 
                 }
             }
