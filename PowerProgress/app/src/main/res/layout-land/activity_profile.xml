@@ -72,7 +72,7 @@
         android:text="@string/profileActivity_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ttv_Lable_name_profileActivity"
+        android:id="@+id/ttv_lable_age_profileActivity"
         android:layout_marginStart="24dp"
         app:layout_constraintLeft_toRightOf="@+id/imv_profilePhoto_ProfileActivity"
         app:layout_constraintBottom_toBottomOf="@+id/ttv_name_profileActivity"
@@ -83,7 +83,7 @@
         android:text="@string/profileActivity_Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ttv_Lable_name_profileActivity"
+        android:id="@+id/ttv_lable_age_profileActivity"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="@+id/ttv_email_profileActivity"
         app:layout_constraintTop_toTopOf="@+id/ttv_email_profileActivity"
@@ -95,7 +95,7 @@
         android:text="@string/profileActivity_Age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ttv_Lable_name_profileActivity"
+        android:id="@+id/ttv_lable_age_profileActivity"
         app:layout_constraintBottom_toBottomOf="@+id/ett_age_profileActivity"
         app:layout_constraintTop_toTopOf="@+id/ett_age_profileActivity"
         android:layout_marginStart="24dp"
@@ -149,7 +149,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="32dp"
-        app:layout_constraintLeft_toRightOf="@+id/ttv_Lable_name_profileActivity" />
+        app:layout_constraintLeft_toRightOf="@+id/ttv_lable_age_profileActivity" />
 
     <TextView
         android:textColor="@color/PPText"
